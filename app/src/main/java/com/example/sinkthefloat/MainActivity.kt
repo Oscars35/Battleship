@@ -17,13 +17,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
         binding.helpButton.setOnClickListener(this)
         binding.exitButton.setOnClickListener(this)
+        binding.startButton.setOnClickListener(this)
     }
 
     override fun onClick(src: View) {
         when(src.id) {
             binding.helpButton.id -> startHelpActivity()
             binding.exitButton.id -> endApp()
+            binding.startButton.id -> selectFeatures()
         }
+    }
+
+    private fun selectFeatures() {
+        startActivity(Intent(this, ConfigurationActivity::class.java))
     }
 
     private fun startHelpActivity() {

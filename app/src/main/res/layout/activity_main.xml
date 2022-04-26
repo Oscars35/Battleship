@@ -6,6 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/mainImageGif"
+        android:layout_width="900dp"
+        android:layout_height="900dp"
+        android:src="@drawable/pixelboat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/mainText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:fontFamily="@font/pirata_one"
+        android:text="@string/app_name"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toTopOf="@+id/helpButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
     <Button
         android:id="@+id/helpButton"
         android:layout_width="118dp"
@@ -39,39 +61,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startButton" />
-
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/mainImage"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/appboat"
-        app:layout_constraintBottom_toTopOf="@+id/mainText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/mainText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="52dp"
-        android:fontFamily="@font/pirata_one"
-        android:text="@string/app_name"
-        android:textSize="50sp"
-        app:layout_constraintBottom_toTopOf="@+id/helpButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/gifImageView"
-        android:layout_width="410dp"
-        android:layout_height="143dp"
-        android:src="@drawable/imagegifboat"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

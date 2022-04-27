@@ -28,37 +28,49 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/helpButton"
         android:layout_width="118dp"
         android:layout_height="70dp"
-        android:text="@string/help_button_text"
+        android:background="@drawable/buttonbarrel"
         android:fontFamily="@font/pirata_one"
+        android:text="@string/help_button_text"
+        android:textColor="#FFFFFF"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.403" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/startButton"
         android:layout_width="118dp"
         android:layout_height="70dp"
-        android:text="@string/start_button_text"
-        android:textSize="40sp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/buttonbarrel"
         android:fontFamily="@font/pirata_one"
+        android:text="@string/start_button_text"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/helpButton" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/exitButton"
         android:layout_width="118dp"
         android:layout_height="70dp"
-        android:text="@string/exit_button_text"
-        android:textSize="40sp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/buttonbarrel"
         android:fontFamily="@font/pirata_one"
+        android:text="@string/exit_button_text"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startButton" />
 

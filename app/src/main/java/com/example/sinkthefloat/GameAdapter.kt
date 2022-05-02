@@ -20,14 +20,6 @@ class GameAdapter(context: Context, images: IntArray): BaseAdapter() {
         return images.size
     }
 
-    /*fun setImages(images: IntArray) {
-        this.images = images
-    }
-
-    fun getImages(): IntArray {
-        return images
-    }*/
-
     fun setImage(position: Int, image: Int) {
         images[position] = image
     }

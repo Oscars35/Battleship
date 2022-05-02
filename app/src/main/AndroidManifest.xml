@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".BoatSelector"
+            android:name=".BoatSelectorActivity"
             android:exported="false" />
         <activity
             android:name=".GameActivity"

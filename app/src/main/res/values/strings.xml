@@ -18,4 +18,6 @@
     <string name="hard_level">Hard</string>
     <string name="ships_positions">Select ships positions</string>
     <string name="available_ships">Available ships</string>
+    <string name="three_blocks">Three Blocks</string>
+    <string name="four_blocks">Four Blocks</string>
 </resources>

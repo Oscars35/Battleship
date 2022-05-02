@@ -1,5 +1,6 @@
 package com.example.sinkthefloat
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.AdapterView
@@ -48,5 +49,9 @@ class GameActivity : AppCompatActivity() {
         return IntArray(positions * positions) {R.drawable.boardbox}
     }
 
-    private fun askForBoatsToUser() {}
+    private fun askForBoatsToUser() {
+        val intent= Intent(this, BoatSelectorActivity::class.java)
+        intent.putExtra("oceanLevel", positions)
+        startActivity(intent)
+    }
 }

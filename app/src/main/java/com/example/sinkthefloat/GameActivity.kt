@@ -24,12 +24,16 @@ class GameActivity : AppCompatActivity() {
 
         getIntentInfo()
 
-        val board: IntArray = addBoxesToGrid()
+        val playerOneBoard: IntArray = addBoxesToGrid()
+        val iaBoard: IntArray = addBoxesToGrid()
 
-        val gameAdapter: GameAdapter = GameAdapter(this, board)
-        binding.boardGridView.adapter = gameAdapter
+        askForBoatsToUser()
+
+        val playerOneAdapter = GameAdapter(this, playerOneBoard)
+        binding.boardGridView.adapter = playerOneAdapter
         binding.boardGridView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, l ->
-            Toast.makeText(this, "Clicked $position", Toast.LENGTH_SHORT).show()
+            playerOneAdapter.setImage(position, R.drawable.pirate)
+            binding.boardGridView.adapter = playerOneAdapter
         }
     }
 
@@ -43,4 +47,6 @@ class GameActivity : AppCompatActivity() {
     private fun addBoxesToGrid(): IntArray {
         return IntArray(positions * positions) {R.drawable.boardbox}
     }
+
+    private fun askForBoatsToUser() {}
 }

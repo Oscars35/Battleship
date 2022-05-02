@@ -100,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pirata_one"
-            android:text="@string/fifteen"
+            android:text="@string/thirteen"
             android:textSize="20dp" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
@@ -108,7 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pirata_one"
-            android:text="@string/twenty"
+            android:text="@string/fifteen"
             android:textSize="20dp" />
 
     </RadioGroup>

@@ -9,11 +9,13 @@
     <string name="configuration">CONFIGURATION</string>
     <string name="player_name">Enter player name</string>
     <string name="ten">10</string>
+    <string name="thirteen">13</string>
     <string name="fifteen">15</string>
-    <string name="twenty">20</string>
     <string name="ia_level">IA LEVEL</string>
     <string name="ocean_level">OCEAN LEVEL</string>
     <string name="easy_level">Easy</string>
     <string name="medium_level">Medium</string>
     <string name="hard_level">Hard</string>
+    <string name="ships_positions">Select ships positions</string>
+    <string name="available_ships">Available ships</string>
 </resources>

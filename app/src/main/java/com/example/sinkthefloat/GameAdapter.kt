@@ -12,12 +12,24 @@ import android.widget.LinearLayout
 class GameAdapter(context: Context, images: IntArray): BaseAdapter() {
 
     private val context: Context = context
-    private val images: IntArray = images
+    private var images: IntArray = images
     private lateinit var layoutInflater: LayoutInflater
 
 
     override fun getCount(): Int {
         return images.size
+    }
+
+    /*fun setImages(images: IntArray) {
+        this.images = images
+    }
+
+    fun getImages(): IntArray {
+        return images
+    }*/
+
+    fun setImage(position: Int, image: Int) {
+        images[position] = image
     }
 
     override fun getItem(p0: Int): Any {

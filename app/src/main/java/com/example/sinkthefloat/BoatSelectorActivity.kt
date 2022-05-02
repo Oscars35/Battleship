@@ -46,10 +46,16 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun thereIsABoatOnThisPosition(position: Int): Boolean {
+        return when(selected) {
+            binding.boatOne.id, binding.boatThree.id -> noBoatInSelected(position)
+            else -> noBoatInSelected(position) || gameAdapter.getItem(position + 3) != R.drawable.boardbox
+        }
+    }
+
+    private fun noBoatInSelected(position: Int): Boolean {
         return gameAdapter.getItem(position) != R.drawable.boardbox
-            || gameAdapter.getItem(position + 1) != R.drawable.boardbox
-            || gameAdapter.getItem(position + 2) != R.drawable.boardbox
-            || gameAdapter.getItem(position + 3) != R.drawable.boardbox
+                || gameAdapter.getItem(position + 1) != R.drawable.boardbox
+                || gameAdapter.getItem(position + 2) != R.drawable.boardbox
     }
 
     override fun onClick(p0: View?) {

@@ -24,6 +24,10 @@ class GameAdapter(context: Context, images: IntArray): BaseAdapter() {
         images[position] = image
     }
 
+    fun getImages(): IntArray {
+        return images
+    }
+
     override fun getItem(p0: Int): Any {
         return images[p0]
     }

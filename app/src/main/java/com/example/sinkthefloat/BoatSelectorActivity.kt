@@ -1,5 +1,7 @@
 package com.example.sinkthefloat
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,6 +13,7 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityBoatSelectorBinding
     private lateinit var gameAdapter: GameAdapter
     private var selected = 0
+    private var alreadySelected = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +31,9 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
                 Toast.makeText(this, "Select again, boat does not fit in here", Toast.LENGTH_LONG).show()
             else if (position % 10 > 6 && selected == binding.boatTwo.id)
                 Toast.makeText(this, "Select again, boat does not fit in here", Toast.LENGTH_LONG).show()
+            else if(thereIsABoatOnThisPosition(position)) {
+                Toast.makeText(this, "Select again, boat does not fit in here", Toast.LENGTH_LONG).show()
+            }
             else {
                 changeGridImagesWithSelected(position)
                 turnGridInvisible()
@@ -39,7 +45,15 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
         binding.boatThree.setOnClickListener(this)
     }
 
+    private fun thereIsABoatOnThisPosition(position: Int): Boolean {
+        return gameAdapter.getItem(position) != R.drawable.boardbox
+            || gameAdapter.getItem(position + 1) != R.drawable.boardbox
+            || gameAdapter.getItem(position + 2) != R.drawable.boardbox
+            || gameAdapter.getItem(position + 3) != R.drawable.boardbox
+    }
+
     override fun onClick(p0: View?) {
+        alreadySelected += 1
         turnGridVisible()
         when(p0?.id) {
             binding.boatOne.id -> selected = binding.boatOne.id
@@ -78,6 +92,7 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun turnGridInvisible() {
+        if(alreadySelected == 3) endSelection()
         binding.boatImagesIv.visibility = View.VISIBLE
         binding.boatOne.visibility = View.VISIBLE
         binding.boatTwo.visibility = View.VISIBLE
@@ -87,5 +102,12 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
         binding.availableShipsTv.visibility = View.VISIBLE
         binding.threeBlocksTwoTv.visibility = View.VISIBLE
         binding.shipSelectorGridView.visibility = View.GONE
+    }
+
+    private fun endSelection() {
+        val data = Intent()
+        data.putExtra("gridAdapter", gameAdapter.getImages())
+        setResult(Activity.RESULT_OK, data)
+        finish()
     }
 }

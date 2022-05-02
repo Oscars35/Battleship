@@ -1,5 +1,6 @@
 package com.example.sinkthefloat
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.sinkthefloat.databinding.ActivityGameBinding
 import kotlin.math.absoluteValue
 import kotlin.properties.Delegates
@@ -17,6 +19,16 @@ class GameActivity : AppCompatActivity() {
     private var positions: Int = 0
     private lateinit var playerName: String
     private lateinit var difficulty: String
+    private lateinit var playerOneBoard: IntArray
+    private lateinit var playerOneAdapter: GameAdapter
+
+    private val getUserBoard = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            playerOneBoard = result.data?.getIntArrayExtra("gridAdapter")!!
+            playerOneAdapter = GameAdapter(this, playerOneBoard)
+            binding.boardGridView.adapter = playerOneAdapter
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,13 +37,10 @@ class GameActivity : AppCompatActivity() {
 
         getIntentInfo()
 
-        val playerOneBoard: IntArray = addBoxesToGrid()
         val iaBoard: IntArray = addBoxesToGrid()
 
         askForBoatsToUser()
 
-        val playerOneAdapter = GameAdapter(this, playerOneBoard)
-        binding.boardGridView.adapter = playerOneAdapter
         binding.boardGridView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, l ->
             playerOneAdapter.setImage(position, R.drawable.pirate)
             binding.boardGridView.adapter = playerOneAdapter
@@ -52,6 +61,6 @@ class GameActivity : AppCompatActivity() {
     private fun askForBoatsToUser() {
         val intent= Intent(this, BoatSelectorActivity::class.java)
         intent.putExtra("oceanLevel", positions)
-        startActivity(intent)
+        getUserBoard.launch(intent)
     }
 }

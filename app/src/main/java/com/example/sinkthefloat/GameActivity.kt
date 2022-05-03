@@ -4,6 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.View
 import android.widget.AdapterView
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.sinkthefloat.databinding.ActivityGameBinding
@@ -19,6 +22,7 @@ class GameActivity : AppCompatActivity() {
     private lateinit var playerOneAdapter: GameAdapter
     private lateinit var iaAdapter: GameAdapter
     private lateinit var realIaBoard: IntArray
+    private var alreadyClicked: Boolean = false
 
     private val getUserBoard = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -36,17 +40,66 @@ class GameActivity : AppCompatActivity() {
         setUpIaBoard()
         askForBoatsToUser()
 
-        binding.boardGridView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, l ->
-            playerOneAdapter.setImage(position, R.drawable.pirate)
-            binding.boardGridView.adapter = playerOneAdapter
+        binding.iaBoardGridView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, l ->
+            if (!alreadyClicked) {
+                checkAndChangeView(position)
+            }
         }
+    }
+
+    private fun checkAndChangeView(position: Int) {
+        alreadyClicked = true
+        checkPosition(position)
+        Handler(Looper.getMainLooper()).postDelayed(Runnable {
+            changeView()
+            iaPredictPosition()
+            alreadyClicked = false
+        }, 1000L)
+    }
+
+    private fun iaPredictPosition() {
+        when(difficulty) {
+            "Easy" -> predictPosition(6)
+            "Medium" -> predictPosition(4)
+            "Hard" -> predictPosition(2)
+        }
+    }
+
+    private fun predictPosition(probability: Int) {
+        if((1..probability).random() == 1)
+            hitBoat()
+        else
+            noHitBoat()
+    }
+
+    private fun changeView() {
+        binding.iaBoardGridView.visibility = View.GONE
+        binding.boardGridView.visibility = View.VISIBLE
+        binding.boardGridView.adapter = playerOneAdapter
+    }
+
+    private fun checkPosition(position: Int) {
+        if(boatInPositionSelected(position)) {
+            iaAdapter.setImage(position, R.drawable.destroyedboat)
+            binding.iaBoardGridView.adapter = iaAdapter
+        }
+        else {
+            iaAdapter.setImage(position, R.drawable.failedhit)
+            binding.iaBoardGridView.adapter = iaAdapter
+        }
+    }
+
+    private fun boatInPositionSelected(position: Int): Boolean {
+        return realIaBoard[position] == R.drawable.appboat
+                || realIaBoard[position] == R.drawable.boat2
+                || realIaBoard[position] == R.drawable.boat3
     }
 
     private fun setUpIaBoard() {
         val visibleIaBoard: IntArray = addBoxesToGrid()
         realIaBoard = createRealIaBoard()
         binding.iaBoardGridView.numColumns = positions
-        iaAdapter = GameAdapter(this, realIaBoard)
+        iaAdapter = GameAdapter(this, visibleIaBoard)
         binding.iaBoardGridView.adapter = iaAdapter
     }
 
@@ -71,18 +124,18 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun addBoatToGrid(row: Int, column: Int, board: IntArray, boat: Int) : IntArray {
-        board[row * 10 + column] = boat
-        board[row * 10 + column + 1] = boat
-        board[row * 10 + column + 2] = boat
-        if(boat == R.drawable.boat2) board[row * 10 + column + 3] = boat
+        board[row * positions + column] = boat
+        board[row * positions + column + 1] = boat
+        board[row * positions + column + 2] = boat
+        if(boat == R.drawable.boat2) board[row * positions + column + 3] = boat
         return board
     }
 
     private fun boatInPosition(column: Int, row: Int, board: IntArray): Boolean {
-        return board[row * 10 + column] != R.drawable.boardbox
-                || board[row * 10 + column + 1] != R.drawable.boardbox
-                || board[row * 10 + column + 2] != R.drawable.boardbox
-                || board[row * 10 + column + 3] != R.drawable.boardbox
+        return board[row * positions + column] != R.drawable.boardbox
+                || board[row * positions + column + 1] != R.drawable.boardbox
+                || board[row * positions + column + 2] != R.drawable.boardbox
+                || board[row * positions + column + 3] != R.drawable.boardbox
     }
 
     private fun getIntentInfo() {

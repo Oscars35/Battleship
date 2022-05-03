@@ -8,9 +8,11 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.sinkthefloat.databinding.ActivityGameBinding
 import java.util.*
+import kotlin.system.exitProcess
 
 class GameActivity : AppCompatActivity() {
 
@@ -24,9 +26,14 @@ class GameActivity : AppCompatActivity() {
     private lateinit var realIaBoard: IntArray
     private var alreadyClicked: Boolean = false
 
+    private var iaCellsWithBoats = 0
+    private lateinit var userCellsWithBoats: IntArray
+    private var userHitBoats = 0
+
     private val getUserBoard = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             playerOneBoard = result.data?.getIntArrayExtra("gridAdapter")!!
+            userCellsWithBoats = result.data?.getIntArrayExtra("userCellsWithBoats")!!
             playerOneAdapter = GameAdapter(this, playerOneBoard)
         }
     }
@@ -41,20 +48,39 @@ class GameActivity : AppCompatActivity() {
         askForBoatsToUser()
 
         binding.iaBoardGridView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, l ->
-            if (!alreadyClicked) {
-                checkAndChangeView(position)
-            }
+            selectedGridStuff(position)
         }
+    }
+
+    private fun selectedGridStuff(position: Int) {
+        if(alreadyClickedPosition(position)) {
+            Toast.makeText(this, R.string.position_already_guessed, Toast.LENGTH_SHORT).show()
+        }
+        else if (!alreadyClicked) {
+            checkAndChangeView(position)
+        }
+    }
+
+    private fun alreadyClickedPosition(position: Int): Boolean {
+        return iaAdapter.getItem(position) == R.drawable.failedhit
+                || iaAdapter.getItem(position) == R.drawable.destroyedboat
     }
 
     private fun checkAndChangeView(position: Int) {
         alreadyClicked = true
         checkPosition(position)
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
-            changeView()
+            changeView(View.GONE, View.VISIBLE)
             iaPredictPosition()
+            changeViewWithDelay()
             alreadyClicked = false
         }, 1000L)
+    }
+
+    private fun changeViewWithDelay() {
+        Handler(Looper.getMainLooper()).postDelayed(Runnable {
+            changeView(View.VISIBLE, View.GONE)
+        }, 2000L)
     }
 
     private fun iaPredictPosition() {
@@ -72,9 +98,40 @@ class GameActivity : AppCompatActivity() {
             noHitBoat()
     }
 
-    private fun changeView() {
-        binding.iaBoardGridView.visibility = View.GONE
-        binding.boardGridView.visibility = View.VISIBLE
+    private fun noHitBoat() {
+        var predicted = (0 until positions).random() * positions + (0..9).random() // ROW + COLUMN
+        while(!noBoatInThisPosition(predicted)) {
+            predicted = (0 until positions).random() * positions + (0..9).random()
+        }
+        changeImageWithPredicted(predicted)
+    }
+
+    private fun changeImageWithPredicted(predicted: Int) {
+        playerOneAdapter.setImage(predicted, R.drawable.failedhit)
+        binding.boardGridView.adapter = playerOneAdapter
+    }
+
+    private fun noBoatInThisPosition(predicted: Int): Boolean {
+        return playerOneBoard[predicted] != R.drawable.appboat
+                && playerOneBoard[predicted] != R.drawable.boat2
+                && playerOneBoard[predicted] != R.drawable.boat3
+    }
+
+    private fun hitBoat() {
+        playerOneAdapter.setImage(userCellsWithBoats[userHitBoats], R.drawable.destroyedboat)
+        binding.boardGridView.adapter = playerOneAdapter
+        userHitBoats += 1
+        checkForIaWinner()
+    }
+
+    private fun checkForIaWinner() {
+        if(userHitBoats == userCellsWithBoats.size)
+            goWinnerScreen("IA")
+    }
+
+    private fun changeView(view1: Int, view2: Int) {
+        binding.iaBoardGridView.visibility = view1
+        binding.boardGridView.visibility = view2
         binding.boardGridView.adapter = playerOneAdapter
     }
 
@@ -82,11 +139,27 @@ class GameActivity : AppCompatActivity() {
         if(boatInPositionSelected(position)) {
             iaAdapter.setImage(position, R.drawable.destroyedboat)
             binding.iaBoardGridView.adapter = iaAdapter
+            iaCellsWithBoats -= 1
+            checkForUserWinner()
         }
         else {
             iaAdapter.setImage(position, R.drawable.failedhit)
             binding.iaBoardGridView.adapter = iaAdapter
         }
+    }
+
+    private fun checkForUserWinner() {
+        if(iaCellsWithBoats == 0) {
+            goWinnerScreen(playerName)
+        }
+    }
+
+    private fun goWinnerScreen(winnerName: String) {
+        val intent = Intent(this, WinnerActivity::class.java)
+        intent.putExtra("winner", winnerName)
+        setResult(Activity.RESULT_OK, intent)
+        startActivity(intent)
+        finish()
     }
 
     private fun boatInPositionSelected(position: Int): Boolean {
@@ -108,7 +181,7 @@ class GameActivity : AppCompatActivity() {
         var boats = 0
         var boat = 0
         while(boats != 3) {
-            var column = (0..6).random()
+            var column = (0..positions - 4).random()
             var row = (0 until positions).random()
             boat = (1..3).random()
             if (!boatInPosition(column,row, board))  {
@@ -127,7 +200,11 @@ class GameActivity : AppCompatActivity() {
         board[row * positions + column] = boat
         board[row * positions + column + 1] = boat
         board[row * positions + column + 2] = boat
-        if(boat == R.drawable.boat2) board[row * positions + column + 3] = boat
+        iaCellsWithBoats += 3
+        if(boat == R.drawable.boat2) {
+            board[row * positions + column + 3] = boat
+            iaCellsWithBoats += 1
+        }
         return board
     }
 

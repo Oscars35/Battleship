@@ -20,4 +20,5 @@
     <string name="available_ships">Available ships</string>
     <string name="three_blocks">Three Blocks</string>
     <string name="four_blocks">Four Blocks</string>
+    <string name="position_already_guessed">Position already guessed, select another one</string>
 </resources>

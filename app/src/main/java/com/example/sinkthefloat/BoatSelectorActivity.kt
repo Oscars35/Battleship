@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.example.sinkthefloat.databinding.ActivityBoatSelectorBinding
+import java.util.*
 
 class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -14,6 +15,7 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var gameAdapter: GameAdapter
     private var selected = 0
     private var alreadySelected = 0
+    private var userCellsWithBoats: MutableList<Int> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +29,9 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
         binding.shipSelectorGridView.adapter = gameAdapter
 
         binding.shipSelectorGridView.setOnItemClickListener { adapterView, view, position, l ->
-            if(position % 10 > 7 && (selected == binding.boatOne.id || selected == binding.boatThree.id))
+            if(position % positions > positions - 3 && (selected == binding.boatOne.id || selected == binding.boatThree.id))
                 Toast.makeText(this, "Select again, boat does not fit in here", Toast.LENGTH_LONG).show()
-            else if (position % 10 > 6 && selected == binding.boatTwo.id)
+            else if (position % positions > positions - 4 && selected == binding.boatTwo.id)
                 Toast.makeText(this, "Select again, boat does not fit in here", Toast.LENGTH_LONG).show()
             else if(thereIsABoatOnThisPosition(position)) {
                 Toast.makeText(this, "Select again, boat does not fit in here", Toast.LENGTH_LONG).show()
@@ -81,6 +83,7 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
         var position = position
         for(images in 1..objective) {
             gameAdapter.setImage(position, id)
+            userCellsWithBoats.add(position)
             position += 1
         }
     }
@@ -113,6 +116,7 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
     private fun endSelection() {
         val data = Intent()
         data.putExtra("gridAdapter", gameAdapter.getImages())
+        data.putExtra("userCellsWithBoats", userCellsWithBoats.toIntArray())
         setResult(Activity.RESULT_OK, data)
         finish()
     }

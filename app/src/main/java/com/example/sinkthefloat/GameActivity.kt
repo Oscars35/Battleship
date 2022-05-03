@@ -18,6 +18,7 @@ class GameActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGameBinding
     private var positions: Int = 0
+    private var shotDownShips = 0
     private lateinit var playerName: String
     private lateinit var difficulty: String
     private lateinit var playerOneBoard: IntArray
@@ -35,6 +36,7 @@ class GameActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             playerOneBoard = result.data?.getIntArrayExtra("gridAdapter")!!
             userCellsWithBoats = result.data?.getIntArrayExtra("userCellsWithBoats")!!
+            binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " + (userCellsWithBoats.size - userHitBoats).toString()
             playerOneAdapter = GameAdapter(this, playerOneBoard, binding.boardGridView)
         }
     }
@@ -48,6 +50,7 @@ class GameActivity : AppCompatActivity() {
         setUpIaBoard()
         askForBoatsToUser()
 
+        binding.shotDownShipsTv.text = getString(R.string.shot_down_ships) + ": " + shotDownShips.toString()
         setActualTurn(playerName)
 
         binding.iaBoardGridView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, l ->
@@ -57,7 +60,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun setActualTurn(actualTurnName: String) {
         actualTurn = actualTurnName
-        binding.actualTurnTv.text = getString(R.string.actual_turn) + " " + actualTurn
+        binding.actualTurnTv.text = getString(R.string.actual_turn) + ": " + actualTurn
     }
 
     private fun selectedGridStuff(position: Int) {
@@ -78,11 +81,10 @@ class GameActivity : AppCompatActivity() {
         alreadyClicked = true
         checkPosition(position)
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
-            setActualTurn("IA")
             changeView(View.GONE, View.VISIBLE)
+            setActualTurn("IA")
             iaPredictPosition()
             changeViewWithDelay()
-            setActualTurn(playerName)
             alreadyClicked = false
         }, 1000L)
     }
@@ -90,6 +92,7 @@ class GameActivity : AppCompatActivity() {
     private fun changeViewWithDelay() {
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
             changeView(View.VISIBLE, View.GONE)
+            setActualTurn(playerName)
         }, 2000L)
     }
 
@@ -131,6 +134,7 @@ class GameActivity : AppCompatActivity() {
         playerOneAdapter.setImage(userCellsWithBoats[userHitBoats], R.drawable.destroyedboat)
         binding.boardGridView.adapter = playerOneAdapter
         userHitBoats += 1
+        binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " + (userCellsWithBoats.size - userHitBoats).toString()
         checkForIaWinner()
     }
 
@@ -150,6 +154,8 @@ class GameActivity : AppCompatActivity() {
             iaAdapter.setImage(position, R.drawable.destroyedboat)
             binding.iaBoardGridView.adapter = iaAdapter
             iaCellsWithBoats -= 1
+            shotDownShips += 1
+            binding.shotDownShipsTv.text = getString(R.string.shot_down_ships) + ": " + shotDownShips.toString()
             checkForUserWinner()
         }
         else {

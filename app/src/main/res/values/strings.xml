@@ -27,4 +27,6 @@
     <string name="new_game">New Game</string>
     <string name="exit">Exit</string>
     <string name="actual_turn">Actual turn</string>
+    <string name="shot_down_ships">Show down ships</string>
+    <string name="reamining_ships">Remaining ships</string>
 </resources>

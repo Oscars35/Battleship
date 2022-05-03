@@ -21,4 +21,10 @@
     <string name="three_blocks">Three Blocks</string>
     <string name="four_blocks">Four Blocks</string>
     <string name="position_already_guessed">Position already guessed, select another one</string>
+    <string name="winner">Winner:</string>
+    <string name="send_mail">Send Email</string>
+    <string name="enter_mail">Enter Email</string>
+    <string name="new_game">New Game</string>
+    <string name="exit">Exit</string>
+    <string name="actual_turn">Actual turn</string>
 </resources>

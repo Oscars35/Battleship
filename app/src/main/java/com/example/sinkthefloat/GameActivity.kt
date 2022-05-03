@@ -25,6 +25,7 @@ class GameActivity : AppCompatActivity() {
     private lateinit var iaAdapter: GameAdapter
     private lateinit var realIaBoard: IntArray
     private var alreadyClicked: Boolean = false
+    private lateinit var actualTurn: String
 
     private var iaCellsWithBoats = 0
     private lateinit var userCellsWithBoats: IntArray
@@ -47,9 +48,16 @@ class GameActivity : AppCompatActivity() {
         setUpIaBoard()
         askForBoatsToUser()
 
+        setActualTurn(playerName)
+
         binding.iaBoardGridView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, l ->
             selectedGridStuff(position)
         }
+    }
+
+    private fun setActualTurn(actualTurnName: String) {
+        actualTurn = actualTurnName
+        binding.actualTurnTv.text = getString(R.string.actual_turn) + " " + actualTurn
     }
 
     private fun selectedGridStuff(position: Int) {
@@ -70,9 +78,11 @@ class GameActivity : AppCompatActivity() {
         alreadyClicked = true
         checkPosition(position)
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
+            setActualTurn("IA")
             changeView(View.GONE, View.VISIBLE)
             iaPredictPosition()
             changeViewWithDelay()
+            setActualTurn(playerName)
             alreadyClicked = false
         }, 1000L)
     }

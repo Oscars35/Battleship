@@ -34,7 +34,7 @@ class GameActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             playerOneBoard = result.data?.getIntArrayExtra("gridAdapter")!!
             userCellsWithBoats = result.data?.getIntArrayExtra("userCellsWithBoats")!!
-            playerOneAdapter = GameAdapter(this, playerOneBoard)
+            playerOneAdapter = GameAdapter(this, playerOneBoard, binding.boardGridView)
         }
     }
 
@@ -172,7 +172,7 @@ class GameActivity : AppCompatActivity() {
         val visibleIaBoard: IntArray = addBoxesToGrid()
         realIaBoard = createRealIaBoard()
         binding.iaBoardGridView.numColumns = positions
-        iaAdapter = GameAdapter(this, visibleIaBoard)
+        iaAdapter = GameAdapter(this, visibleIaBoard, binding.iaBoardGridView)
         binding.iaBoardGridView.adapter = iaAdapter
     }
 

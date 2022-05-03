@@ -6,14 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.GridView
 import android.widget.ImageView
 import android.widget.LinearLayout
+import kotlin.math.sqrt
 
-class GameAdapter(context: Context, images: IntArray): BaseAdapter() {
+class GameAdapter(context: Context, images: IntArray, grid: GridView): BaseAdapter() { //grid: Int
 
     private val context: Context = context
     private var images: IntArray = images
     private lateinit var layoutInflater: LayoutInflater
+    private var grid = grid
 
 
     override fun getCount(): Int {
@@ -45,6 +48,7 @@ class GameAdapter(context: Context, images: IntArray): BaseAdapter() {
             p1 = layoutInflater.inflate(R.layout.grid_item, null)
 
         val imageView: ImageView? = p1?.findViewById(R.id.gridBoxImage)
+        imageView!!.layoutParams.height = grid?.height!! / sqrt(images.size.toDouble()).toInt()
         imageView?.setImageResource(images[p0])
 
         return p1!!

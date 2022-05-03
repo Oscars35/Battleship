@@ -25,7 +25,7 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
         val positions: Int = intent.getIntExtra("oceanLevel", 10)
         val board = IntArray(positions * positions) {R.drawable.boardbox}
         binding.shipSelectorGridView.numColumns = positions
-        gameAdapter = GameAdapter(this, board)
+        gameAdapter = GameAdapter(this, board, binding.shipSelectorGridView)
         binding.shipSelectorGridView.adapter = gameAdapter
 
         binding.shipSelectorGridView.setOnItemClickListener { adapterView, view, position, l ->

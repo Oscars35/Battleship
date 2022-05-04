@@ -11,8 +11,8 @@
     <string name="ten">10</string>
     <string name="thirteen">13</string>
     <string name="fifteen">15</string>
-    <string name="ia_level">IA LEVEL</string>
-    <string name="ocean_level">OCEAN LEVEL</string>
+    <string name="ia_level">AI LEVEL</string>
+    <string name="ocean_level">OCEAN LENGTH</string>
     <string name="easy_level">Easy</string>
     <string name="medium_level">Medium</string>
     <string name="hard_level">Hard</string>

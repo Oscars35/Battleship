@@ -6,39 +6,41 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.sinkthefloat.databinding.ActivityBoatSelectorBinding
-import java.util.*
 
 class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityBoatSelectorBinding
-    private lateinit var gameAdapter: GameAdapter
-    private var selected = 0
-    private var alreadySelected = 0
-    private var userCellsWithBoats: MutableList<Int> = mutableListOf()
+    lateinit var viewModel: BoatSelectorActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBoatSelectorBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewModel = ViewModelProvider(this)[BoatSelectorActivityViewModel::class.java]
+        viewModel.userCellsWithBoats.value = mutableListOf()
+
+        createObservers()
 
         val positions: Int = intent.getIntExtra("oceanLevel", 10)
         val board = IntArray(positions * positions) {R.drawable.boardbox}
         binding.shipSelectorGridView.numColumns = positions
-        gameAdapter = GameAdapter(this, board, binding.shipSelectorGridView)
-        binding.shipSelectorGridView.adapter = gameAdapter
+        viewModel.gameAdapter.value = GameAdapter(this, board, binding.shipSelectorGridView)
+        binding.shipSelectorGridView.adapter = viewModel.gameAdapter.value
 
         binding.shipSelectorGridView.setOnItemClickListener { adapterView, view, position, l ->
-            if(position % positions > positions - 3 && (selected == binding.boatOne.id || selected == binding.boatThree.id))
-                Toast.makeText(this, "Select again, boat does not fit in here", Toast.LENGTH_LONG).show()
-            else if (position % positions > positions - 4 && selected == binding.boatTwo.id)
-                Toast.makeText(this, "Select again, boat does not fit in here", Toast.LENGTH_LONG).show()
-            else if(thereIsABoatOnThisPosition(position)) {
-                Toast.makeText(this, "Select again, boat does not fit in here", Toast.LENGTH_LONG).show()
-            }
-            else {
-                changeGridImagesWithSelected(position)
-                turnGridInvisible()
+            when {
+                threeBoatDoesNotFit(positions, position) -> Toast.makeText(this, "Select again, boat does not fit in here", Toast.LENGTH_LONG).show()
+                fourBoatDoesNotFit(positions, position) -> Toast.makeText(this, "Select again, boat does not fit in here", Toast.LENGTH_LONG).show()
+                thereIsABoatOnThisPosition(position) -> {
+                    Toast.makeText(this, "Select again, boat does not fit in here", Toast.LENGTH_LONG).show()
+                }
+                else -> {
+                    changeGridImagesWithSelected(position)
+                    turnGridInvisible()
+                }
             }
         }
 
@@ -47,43 +49,59 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
         binding.boatThree.setOnClickListener(this)
     }
 
+    private fun createObservers() {
+        viewModel.gameAdapter.observe(this, Observer { lastAdapter ->
+            binding.shipSelectorGridView.adapter = lastAdapter
+        })
+    }
+
+    private fun fourBoatDoesNotFit(positions: Int, position: Int): Boolean {
+        return position % positions > positions - 4
+                && viewModel.selected.value == binding.boatTwo.id
+    }
+
+    private fun threeBoatDoesNotFit(positions: Int, position: Int): Boolean {
+        return position % positions > positions - 3
+                && (viewModel.selected.value == binding.boatOne.id || viewModel.selected.value == binding.boatThree.id)
+    }
+
     private fun thereIsABoatOnThisPosition(position: Int): Boolean {
-        return when(selected) {
+        return when(viewModel.selected.value) {
             binding.boatOne.id, binding.boatThree.id -> noBoatInSelected(position)
-            else -> noBoatInSelected(position) || gameAdapter.getItem(position + 3) != R.drawable.boardbox
+            else -> noBoatInSelected(position) || viewModel.gameAdapter.value!!.getItem(position + 3) != R.drawable.boardbox
         }
     }
 
     private fun noBoatInSelected(position: Int): Boolean {
-        return gameAdapter.getItem(position) != R.drawable.boardbox
-                || gameAdapter.getItem(position + 1) != R.drawable.boardbox
-                || gameAdapter.getItem(position + 2) != R.drawable.boardbox
+        return viewModel.gameAdapter.value!!.getItem(position) != R.drawable.boardbox
+                || viewModel.gameAdapter.value!!.getItem(position + 1) != R.drawable.boardbox
+                || viewModel.gameAdapter.value!!.getItem(position + 2) != R.drawable.boardbox
     }
 
     override fun onClick(p0: View?) {
-        alreadySelected += 1
+        viewModel.alreadySelected.value = ++viewModel.alreadySelectedNumber
         turnGridVisible()
         when(p0?.id) {
-            binding.boatOne.id -> selected = binding.boatOne.id
-            binding.boatTwo.id -> selected = binding.boatTwo.id
-            binding.boatThree.id -> selected = binding.boatThree.id
+            binding.boatOne.id -> viewModel.selected.value = binding.boatOne.id
+            binding.boatTwo.id -> viewModel.selected.value = binding.boatTwo.id
+            binding.boatThree.id -> viewModel.selected.value = binding.boatThree.id
         }
     }
 
     private fun changeGridImagesWithSelected(position: Int) {
-        when(selected) {
+        when(viewModel.selected.value) {
             binding.boatOne.id -> changeImages(position, R.drawable.appboat, 3)
             binding.boatTwo.id -> changeImages(position, R.drawable.boat2, 4)
             binding.boatThree.id -> changeImages(position, R.drawable.boat3, 3)
         }
-        binding.shipSelectorGridView.adapter = gameAdapter
+        binding.shipSelectorGridView.adapter = viewModel.gameAdapter.value
     }
 
     private fun changeImages(position: Int, id: Int, objective: Int) {
         var position = position
         for(images in 1..objective) {
-            gameAdapter.setImage(position, id)
-            userCellsWithBoats.add(position)
+            viewModel.gameAdapter.value!!.setImage(position, id)
+            viewModel.userCellsWithBoats.value!!.add(position)
             position += 1
         }
     }
@@ -101,7 +119,7 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun turnGridInvisible() {
-        if(alreadySelected == 3) endSelection()
+        if(viewModel.alreadySelected.value == 3) endSelection()
         binding.boatImagesIv.visibility = View.VISIBLE
         binding.boatOne.visibility = View.VISIBLE
         binding.boatTwo.visibility = View.VISIBLE
@@ -115,8 +133,8 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun endSelection() {
         val data = Intent()
-        data.putExtra("gridAdapter", gameAdapter.getImages())
-        data.putExtra("userCellsWithBoats", userCellsWithBoats.toIntArray())
+        data.putExtra("gridAdapter", viewModel.gameAdapter.value!!.getImages())
+        data.putExtra("userCellsWithBoats", viewModel.userCellsWithBoats.value!!.toIntArray())
         setResult(Activity.RESULT_OK, data)
         finish()
     }

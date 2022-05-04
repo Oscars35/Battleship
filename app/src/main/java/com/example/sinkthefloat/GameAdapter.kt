@@ -2,6 +2,7 @@ package com.example.sinkthefloat
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +10,15 @@ import android.widget.BaseAdapter
 import android.widget.GridView
 import android.widget.ImageView
 import android.widget.LinearLayout
+import java.io.Serializable
 import kotlin.math.sqrt
 
-class GameAdapter(context: Context, images: IntArray, grid: GridView): BaseAdapter() { //grid: Int
+class GameAdapter(context: Context, images: IntArray, grid: GridView): BaseAdapter(), Serializable { //grid: Int
 
     private val context: Context = context
     private var images: IntArray = images
     private lateinit var layoutInflater: LayoutInflater
     private var grid = grid
-
 
     override fun getCount(): Int {
         return images.size

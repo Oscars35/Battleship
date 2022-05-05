@@ -114,7 +114,7 @@ class GameActivity : AppCompatActivity() {
         checkPosition(position)
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
             changeView(View.GONE, View.VISIBLE)
-            setActualTurn("IA")
+            setActualTurn("AI")
             iaPredictPosition()
             changeViewWithDelay()
             alreadyClicked = false
@@ -154,7 +154,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun changeImageWithPredicted(predicted: Int) {
         playerOneAdapter.setImage(predicted, R.drawable.failedhit)
-        binding.boardGridView.adapter = playerOneAdapter
+        playerOneAdapter.notifyDataSetChanged()
     }
 
     private fun noBoatInThisPosition(predicted: Int): Boolean {
@@ -166,7 +166,7 @@ class GameActivity : AppCompatActivity() {
     private fun hitBoat() {
         addLog("AI hit boat in position: ${viewModel.userCellsWithBoats.value!![userHitBoats]}")
         playerOneAdapter.setImage(viewModel.userCellsWithBoats.value!![userHitBoats], R.drawable.destroyedboat)
-        binding.boardGridView!!.adapter = playerOneAdapter
+        playerOneAdapter.notifyDataSetChanged()
         userHitBoats += 1
         binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " + (viewModel.userCellsWithBoats.value!!.size - userHitBoats).toString()
         checkForIaWinner()
@@ -186,7 +186,7 @@ class GameActivity : AppCompatActivity() {
     private fun checkPosition(position: Int) {
         if(boatInPositionSelected(position)) {
             iaAdapter.setImage(position, R.drawable.destroyedboat)
-            binding.iaBoardGridView!!.adapter = iaAdapter
+            iaAdapter.notifyDataSetChanged()
             iaCellsWithBoats -= 1
             viewModel.shotDownShips.value = ++viewModel.shotDownShipsModify
             binding.shotDownShipsTv.text = getString(R.string.shot_down_ships) + ": " + viewModel.shotDownShips.value.toString()
@@ -194,7 +194,7 @@ class GameActivity : AppCompatActivity() {
         }
         else {
             iaAdapter.setImage(position, R.drawable.failedhit)
-            binding.iaBoardGridView!!.adapter = iaAdapter
+            iaAdapter.notifyDataSetChanged()
         }
     }
 

@@ -31,4 +31,8 @@ class GameActivityViewModel: ViewModel() {
     val visibleIaBoard: MutableLiveData<IntArray> by lazy {
         MutableLiveData<IntArray>(IntArray(positions * positions) {R.drawable.boardbox})
     }
+
+    val userCellsWithBoats: MutableLiveData<IntArray> by lazy {
+        MutableLiveData<IntArray>(IntArray(positions * positions) {R.drawable.boardbox})
+    }
 }

@@ -16,6 +16,11 @@ import com.example.sinkthefloat.databinding.ActivityGameBinding
 
 class GameActivity : AppCompatActivity() {
 
+    private var MAX_BOATS = 3
+    private var MIN_PROBABILITY = 6
+    private var MEDIUM_PROBABILITY = 4
+    private var MAX_PROBABILITY = 2
+
     private lateinit var binding: ActivityGameBinding
     private lateinit var playerName: String
     private lateinit var difficulty: String
@@ -24,15 +29,14 @@ class GameActivity : AppCompatActivity() {
     private var alreadyClicked: Boolean = false
 
     private var iaCellsWithBoats = 0
-    private lateinit var userCellsWithBoats: IntArray
     private var userHitBoats = 0
     private lateinit var viewModel: GameActivityViewModel
 
     private val getUserBoard = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             viewModel.playerOneBoard.value = result.data?.getIntArrayExtra("gridAdapter")!!
-            userCellsWithBoats = result.data?.getIntArrayExtra("userCellsWithBoats")!!
-            binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " + (userCellsWithBoats.size - userHitBoats).toString()
+            viewModel.userCellsWithBoats.value = result.data?.getIntArrayExtra("userCellsWithBoats")!!
+            binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " + (viewModel.userCellsWithBoats.value!!.size - userHitBoats).toString()
             playerOneAdapter = GameAdapter(this, viewModel.playerOneBoard!!.value!!, binding.boardGridView!!)
         }
     }
@@ -53,6 +57,7 @@ class GameActivity : AppCompatActivity() {
         setActualTurn(playerName)
 
         binding.iaBoardGridView!!.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            println(viewModel.userCellsWithBoats.value!!.toMutableList())
             selectedGridStuff(position)
         }
     }
@@ -120,9 +125,9 @@ class GameActivity : AppCompatActivity() {
 
     private fun iaPredictPosition() {
         when(difficulty) {
-            "Easy" -> predictPosition(6)
-            "Medium" -> predictPosition(4)
-            "Hard" -> predictPosition(2)
+            "Easy" -> predictPosition(MIN_PROBABILITY)
+            "Medium" -> predictPosition(MEDIUM_PROBABILITY)
+            "Hard" -> predictPosition(MAX_PROBABILITY)
         }
     }
 
@@ -153,15 +158,15 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun hitBoat() {
-        playerOneAdapter.setImage(userCellsWithBoats[userHitBoats], R.drawable.destroyedboat)
+        playerOneAdapter.setImage(viewModel.userCellsWithBoats.value!![userHitBoats], R.drawable.destroyedboat)
         binding.boardGridView!!.adapter = playerOneAdapter
         userHitBoats += 1
-        binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " + (userCellsWithBoats.size - userHitBoats).toString()
+        binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " + (viewModel.userCellsWithBoats.value!!.size - userHitBoats).toString()
         checkForIaWinner()
     }
 
     private fun checkForIaWinner() {
-        if(userHitBoats == userCellsWithBoats.size)
+        if(userHitBoats == viewModel.userCellsWithBoats.value!!.size)
             goWinnerScreen("IA")
     }
 
@@ -208,7 +213,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun setUpIaBoard() {
         if(viewModel.firstTime.value!!) viewModel.visibleIaBoard.value = addBoxesToGrid()
-        viewModel.realIaBoard.value = createRealIaBoard()
+        if(viewModel.firstTime.value!!) viewModel.realIaBoard.value = createRealIaBoard()
         binding.iaBoardGridView!!.numColumns = viewModel.positions
         iaAdapter = GameAdapter(this, viewModel.visibleIaBoard!!.value!!, binding!!.iaBoardGridView!!)
         binding.iaBoardGridView!!.adapter = iaAdapter
@@ -217,11 +222,10 @@ class GameActivity : AppCompatActivity() {
     private fun createRealIaBoard(): IntArray {
         var board = addBoxesToGrid()
         var boats = 0
-        var boat = 0
-        while(boats != 3) {
-            var column = (0..viewModel.positions - 4).random()
-            var row = (0 until viewModel.positions).random()
-            boat = (1..3).random()
+        while(boats != MAX_BOATS) {
+            var column = validColumn()
+            var row = validRow()
+            var boat = genBoat()
             if (!boatInPosition(column,row, board))  {
                 when(boat) {
                     1 -> board = addBoatToGrid(row, column, board, R.drawable.appboat)
@@ -233,6 +237,12 @@ class GameActivity : AppCompatActivity() {
         }
         return board
     }
+
+    private fun genBoat(): Int = (1..3).random()
+
+    private fun validColumn(): Int = (0..viewModel.positions - 4).random()
+
+    private fun validRow(): Int = (0 until viewModel.positions).random()
 
     private fun addBoatToGrid(row: Int, column: Int, board: IntArray, boat: Int) : IntArray {
         board[row * viewModel.positions + column] = boat

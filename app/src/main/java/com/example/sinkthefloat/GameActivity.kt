@@ -10,22 +10,18 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.sinkthefloat.databinding.ActivityGameBinding
 
 class GameActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGameBinding
-    private var positions: Int = 0
-    private var shotDownShips = 0
     private lateinit var playerName: String
     private lateinit var difficulty: String
-    private lateinit var playerOneBoard: IntArray
     private lateinit var playerOneAdapter: GameAdapter
     private lateinit var iaAdapter: GameAdapter
-    private lateinit var realIaBoard: IntArray
     private var alreadyClicked: Boolean = false
-    private lateinit var actualTurn: String
 
     private var iaCellsWithBoats = 0
     private lateinit var userCellsWithBoats: IntArray
@@ -34,10 +30,10 @@ class GameActivity : AppCompatActivity() {
 
     private val getUserBoard = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            playerOneBoard = result.data?.getIntArrayExtra("gridAdapter")!!
+            viewModel.playerOneBoard.value = result.data?.getIntArrayExtra("gridAdapter")!!
             userCellsWithBoats = result.data?.getIntArrayExtra("userCellsWithBoats")!!
             binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " + (userCellsWithBoats.size - userHitBoats).toString()
-            playerOneAdapter = GameAdapter(this, playerOneBoard, binding.boardGridView)
+            playerOneAdapter = GameAdapter(this, viewModel.playerOneBoard!!.value!!, binding.boardGridView!!)
         }
     }
 
@@ -47,17 +43,34 @@ class GameActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this)[GameActivityViewModel::class.java]
+        createObservers()
 
         getIntentInfo()
         setUpIaBoard()
         askForBoatsToUserIfFirstTime()
 
-        binding.shotDownShipsTv.text = getString(R.string.shot_down_ships) + ": " + shotDownShips.toString()
+        binding.shotDownShipsTv.text = getString(R.string.shot_down_ships) + ": " + viewModel.shotDownShips.value.toString()
         setActualTurn(playerName)
 
-        binding.iaBoardGridView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, l ->
+        binding.iaBoardGridView!!.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             selectedGridStuff(position)
         }
+    }
+
+    private fun createObservers() {
+        viewModel.actualTurn.observe(this, Observer {
+            binding.actualTurnTv.text = getString(R.string.actual_turn) + ": " + viewModel.actualTurn.value
+        })
+
+        viewModel.visibleIaBoard.observe(this, Observer {
+            iaAdapter = GameAdapter(this, viewModel.visibleIaBoard!!.value!!, binding!!.iaBoardGridView)
+            binding.iaBoardGridView.adapter = iaAdapter
+        })
+
+        viewModel.playerOneBoard.observe(this, Observer {
+            playerOneAdapter = GameAdapter(this, viewModel.playerOneBoard.value!!, binding!!.boardGridView)
+            binding.boardGridView.adapter = playerOneAdapter
+        })
     }
 
     private fun askForBoatsToUserIfFirstTime() {
@@ -68,8 +81,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun setActualTurn(actualTurnName: String) {
-        actualTurn = actualTurnName
-        binding.actualTurnTv.text = getString(R.string.actual_turn) + ": " + actualTurn
+        viewModel.actualTurn.value = actualTurnName
+        binding.actualTurnTv.text = getString(R.string.actual_turn) + ": " + viewModel.actualTurn.value
     }
 
     private fun selectedGridStuff(position: Int) {
@@ -121,9 +134,9 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun noHitBoat() {
-        var predicted = (0 until positions).random() * positions + (0..9).random() // ROW + COLUMN
+        var predicted = (0 until viewModel.positions).random() * viewModel.positions + (0..9).random() // ROW + COLUMN
         while(!noBoatInThisPosition(predicted)) {
-            predicted = (0 until positions).random() * positions + (0..9).random()
+            predicted = (0 until viewModel.positions).random() * viewModel.positions + (0..9).random()
         }
         changeImageWithPredicted(predicted)
     }
@@ -134,14 +147,14 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun noBoatInThisPosition(predicted: Int): Boolean {
-        return playerOneBoard[predicted] != R.drawable.appboat
-                && playerOneBoard[predicted] != R.drawable.boat2
-                && playerOneBoard[predicted] != R.drawable.boat3
+        return viewModel.playerOneBoard!!.value!![predicted] != R.drawable.appboat
+                && viewModel.playerOneBoard!!.value!![predicted] != R.drawable.boat2
+                && viewModel.playerOneBoard!!.value!![predicted] != R.drawable.boat3
     }
 
     private fun hitBoat() {
         playerOneAdapter.setImage(userCellsWithBoats[userHitBoats], R.drawable.destroyedboat)
-        binding.boardGridView.adapter = playerOneAdapter
+        binding.boardGridView!!.adapter = playerOneAdapter
         userHitBoats += 1
         binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " + (userCellsWithBoats.size - userHitBoats).toString()
         checkForIaWinner()
@@ -153,23 +166,23 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun changeView(view1: Int, view2: Int) {
-        binding.iaBoardGridView.visibility = view1
-        binding.boardGridView.visibility = view2
-        binding.boardGridView.adapter = playerOneAdapter
+        binding.iaBoardGridView!!.visibility = view1
+        binding.boardGridView!!.visibility = view2
+        binding.boardGridView!!.adapter = playerOneAdapter
     }
 
     private fun checkPosition(position: Int) {
         if(boatInPositionSelected(position)) {
             iaAdapter.setImage(position, R.drawable.destroyedboat)
-            binding.iaBoardGridView.adapter = iaAdapter
+            binding.iaBoardGridView!!.adapter = iaAdapter
             iaCellsWithBoats -= 1
-            shotDownShips += 1
-            binding.shotDownShipsTv.text = getString(R.string.shot_down_ships) + ": " + shotDownShips.toString()
+            viewModel.shotDownShips.value = ++viewModel.shotDownShipsModify
+            binding.shotDownShipsTv.text = getString(R.string.shot_down_ships) + ": " + viewModel.shotDownShips.value.toString()
             checkForUserWinner()
         }
         else {
             iaAdapter.setImage(position, R.drawable.failedhit)
-            binding.iaBoardGridView.adapter = iaAdapter
+            binding.iaBoardGridView!!.adapter = iaAdapter
         }
     }
 
@@ -188,17 +201,17 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun boatInPositionSelected(position: Int): Boolean {
-        return realIaBoard[position] == R.drawable.appboat
-                || realIaBoard[position] == R.drawable.boat2
-                || realIaBoard[position] == R.drawable.boat3
+        return viewModel.realIaBoard.value!![position] == R.drawable.appboat
+                || viewModel.realIaBoard.value!![position] == R.drawable.boat2
+                || viewModel.realIaBoard.value!![position] == R.drawable.boat3
     }
 
     private fun setUpIaBoard() {
-        val visibleIaBoard: IntArray = addBoxesToGrid()
-        realIaBoard = createRealIaBoard()
-        binding.iaBoardGridView.numColumns = positions
-        iaAdapter = GameAdapter(this, visibleIaBoard, binding.iaBoardGridView)
-        binding.iaBoardGridView.adapter = iaAdapter
+        if(viewModel.firstTime.value!!) viewModel.visibleIaBoard.value = addBoxesToGrid()
+        viewModel.realIaBoard.value = createRealIaBoard()
+        binding.iaBoardGridView!!.numColumns = viewModel.positions
+        iaAdapter = GameAdapter(this, viewModel.visibleIaBoard!!.value!!, binding!!.iaBoardGridView!!)
+        binding.iaBoardGridView!!.adapter = iaAdapter
     }
 
     private fun createRealIaBoard(): IntArray {
@@ -206,8 +219,8 @@ class GameActivity : AppCompatActivity() {
         var boats = 0
         var boat = 0
         while(boats != 3) {
-            var column = (0..positions - 4).random()
-            var row = (0 until positions).random()
+            var column = (0..viewModel.positions - 4).random()
+            var row = (0 until viewModel.positions).random()
             boat = (1..3).random()
             if (!boatInPosition(column,row, board))  {
                 when(boat) {
@@ -222,38 +235,38 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun addBoatToGrid(row: Int, column: Int, board: IntArray, boat: Int) : IntArray {
-        board[row * positions + column] = boat
-        board[row * positions + column + 1] = boat
-        board[row * positions + column + 2] = boat
+        board[row * viewModel.positions + column] = boat
+        board[row * viewModel.positions + column + 1] = boat
+        board[row * viewModel.positions + column + 2] = boat
         iaCellsWithBoats += 3
         if(boat == R.drawable.boat2) {
-            board[row * positions + column + 3] = boat
+            board[row * viewModel.positions + column + 3] = boat
             iaCellsWithBoats += 1
         }
         return board
     }
 
     private fun boatInPosition(column: Int, row: Int, board: IntArray): Boolean {
-        return board[row * positions + column] != R.drawable.boardbox
-                || board[row * positions + column + 1] != R.drawable.boardbox
-                || board[row * positions + column + 2] != R.drawable.boardbox
-                || board[row * positions + column + 3] != R.drawable.boardbox
+        return board[row * viewModel.positions + column] != R.drawable.boardbox
+                || board[row * viewModel.positions + column + 1] != R.drawable.boardbox
+                || board[row * viewModel.positions + column + 2] != R.drawable.boardbox
+                || board[row * viewModel.positions + column + 3] != R.drawable.boardbox
     }
 
     private fun getIntentInfo() {
-        positions = intent.getStringExtra("oceanLevel")!!.toInt()
+        viewModel.positions = intent.getStringExtra("oceanLevel")!!.toInt()
         playerName = intent.getStringExtra("playerName")!!
         difficulty = intent.getStringExtra("difficulty")!!
-        binding.boardGridView.numColumns = positions
+        binding.boardGridView!!.numColumns = viewModel.positions
     }
 
     private fun addBoxesToGrid(): IntArray {
-        return IntArray(positions * positions) {R.drawable.boardbox}
+        return IntArray(viewModel.positions * viewModel.positions) {R.drawable.boardbox}
     }
 
     private fun askForBoatsToUser() {
         val intent= Intent(this, BoatSelectorActivity::class.java)
-        intent.putExtra("oceanLevel", positions)
+        intent.putExtra("oceanLevel", viewModel.positions)
         getUserBoard.launch(intent)
     }
 }

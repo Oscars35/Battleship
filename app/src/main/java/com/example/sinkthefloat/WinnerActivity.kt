@@ -43,9 +43,10 @@ class WinnerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun sendMailViaIntent() {
-        val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + binding.playerNameEditText.text.toString()))
-        intent.putExtra(Intent.EXTRA_SUBJECT, "logs")
-        intent.putExtra(Intent.EXTRA_TEXT, logsArray.joinToString());
+        val uriMail = "mailto:" + binding.playerNameEditText.text.toString()
+        val uriSubject = "?subject=${Uri.encode("Battleship: log")}"
+        val uriText = "&body=${Uri.encode(logsArray.joinToString())}"
+        val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("$uriMail$uriSubject$uriText"))
         startActivity(intent)
     }
 

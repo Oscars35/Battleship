@@ -23,7 +23,7 @@ class GameActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGameBinding
     private lateinit var playerName: String
-    private lateinit var difficulty: String
+    private lateinit var difficulty: DifficultyLevel
     private lateinit var playerOneAdapter: GameAdapter
     private lateinit var iaAdapter: GameAdapter
     private var alreadyClicked: Boolean = false
@@ -130,9 +130,9 @@ class GameActivity : AppCompatActivity() {
 
     private fun iaPredictPosition() {
         when(difficulty) {
-            "Easy" -> predictPosition(MIN_PROBABILITY)
-            "Medium" -> predictPosition(MEDIUM_PROBABILITY)
-            "Hard" -> predictPosition(MAX_PROBABILITY)
+            DifficultyLevel.EASY -> predictPosition(MIN_PROBABILITY)
+            DifficultyLevel.MEDIUM -> predictPosition(MEDIUM_PROBABILITY)
+            DifficultyLevel.HARD -> predictPosition(MAX_PROBABILITY)
         }
     }
 
@@ -275,7 +275,7 @@ class GameActivity : AppCompatActivity() {
     private fun getIntentInfo() {
         viewModel.positions = intent.getStringExtra("oceanLevel")!!.toInt()
         playerName = intent.getStringExtra("playerName")!!
-        difficulty = intent.getStringExtra("difficulty")!!
+        difficulty = (intent.getSerializableExtra("difficulty") as DifficultyLevel?)!!
         if(viewModel.firstTime.value!!) viewModel.logsArray.value = intent.getStringArrayListExtra("logsArray")
         binding.boardGridView!!.numColumns = viewModel.positions
         addLog("Got intent info")

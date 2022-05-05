@@ -16,7 +16,7 @@ class ConfigurationActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityConfigurationBinding
     private lateinit var playerName: String
     private lateinit var oceanLevel: String
-    private lateinit var difficulty: String
+    private lateinit var difficulty: DifficultyLevel
 
     private var logsArray: ArrayList<String> = arrayListOf()
 
@@ -57,10 +57,18 @@ class ConfigurationActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun getSelectedStuff() {
         val radioButton = binding.root.findViewById<RadioButton>(binding.iaLevelRg.checkedRadioButtonId)
-        difficulty = radioButton.text.toString()
+        getRadioButtonInfo(radioButton)
         val radioButton2 = binding.root.findViewById<RadioButton>(binding.radioGroupGrid.checkedRadioButtonId)
         oceanLevel = radioButton2.text.toString()
         playerName = binding.playerNameEditText.text.toString()
+    }
+
+    private fun getRadioButtonInfo(radioButton: RadioButton){
+        when(radioButton.id) {
+            binding.easyRadioButton.id -> difficulty = DifficultyLevel.EASY
+            binding.mediumRadioButton.id -> difficulty = DifficultyLevel.MEDIUM
+            binding.hardRadioButton.id -> difficulty = DifficultyLevel.HARD
+        }
     }
 
     private fun setNotSelectedError(radioButton: RadioButton) {

@@ -6,9 +6,10 @@ import androidx.lifecycle.ViewModel
 class BoatSelectorActivityViewModel: ViewModel() {
 
     var alreadySelectedNumber = 0
+    var positions = 0
 
-    val gameAdapter: MutableLiveData<GameAdapter> by lazy {
-        MutableLiveData<GameAdapter>()
+    val gameBoard: MutableLiveData<IntArray> by lazy {
+        MutableLiveData<IntArray>(IntArray(positions * positions) {R.drawable.boardbox})
     }
 
     val selected: MutableLiveData<Int> by lazy {
@@ -20,6 +21,6 @@ class BoatSelectorActivityViewModel: ViewModel() {
     }
 
     val userCellsWithBoats: MutableLiveData<MutableList<Int>> by lazy {
-        MutableLiveData<MutableList<Int>>()
+        MutableLiveData<MutableList<Int>>(mutableListOf())
     }
 }

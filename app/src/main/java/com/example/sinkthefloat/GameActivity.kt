@@ -10,9 +10,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.ViewModelProvider
 import com.example.sinkthefloat.databinding.ActivityGameBinding
-import java.util.*
-import kotlin.system.exitProcess
 
 class GameActivity : AppCompatActivity() {
 
@@ -31,6 +30,7 @@ class GameActivity : AppCompatActivity() {
     private var iaCellsWithBoats = 0
     private lateinit var userCellsWithBoats: IntArray
     private var userHitBoats = 0
+    private lateinit var viewModel: GameActivityViewModel
 
     private val getUserBoard = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -46,15 +46,24 @@ class GameActivity : AppCompatActivity() {
         binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel = ViewModelProvider(this)[GameActivityViewModel::class.java]
+
         getIntentInfo()
         setUpIaBoard()
-        askForBoatsToUser()
+        askForBoatsToUserIfFirstTime()
 
         binding.shotDownShipsTv.text = getString(R.string.shot_down_ships) + ": " + shotDownShips.toString()
         setActualTurn(playerName)
 
         binding.iaBoardGridView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, l ->
             selectedGridStuff(position)
+        }
+    }
+
+    private fun askForBoatsToUserIfFirstTime() {
+        if(viewModel.firstTime.value!!) {
+            askForBoatsToUser()
+            viewModel.firstTime.value = false
         }
     }
 

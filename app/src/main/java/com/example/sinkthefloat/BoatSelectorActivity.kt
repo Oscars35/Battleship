@@ -14,29 +14,25 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityBoatSelectorBinding
     lateinit var viewModel: BoatSelectorActivityViewModel
+    private lateinit var gameAdapter: GameAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBoatSelectorBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel = ViewModelProvider(this)[BoatSelectorActivityViewModel::class.java]
-        viewModel.userCellsWithBoats.value = mutableListOf()
+
+        val positions: Int = intent.getIntExtra("oceanLevel", 10)
+        viewModel.positions = positions
+        binding.shipSelectorGridView.numColumns = positions
+        gameAdapter = GameAdapter(this, viewModel.gameBoard.value!!, binding.shipSelectorGridView)
+        binding.shipSelectorGridView.adapter = gameAdapter
 
         createObservers()
 
-        val positions: Int = intent.getIntExtra("oceanLevel", 10)
-        val board = IntArray(positions * positions) {R.drawable.boardbox}
-        binding.shipSelectorGridView.numColumns = positions
-        viewModel.gameAdapter.value = GameAdapter(this, board, binding.shipSelectorGridView)
-        binding.shipSelectorGridView.adapter = viewModel.gameAdapter.value
-
-        binding.shipSelectorGridView.setOnItemClickListener { adapterView, view, position, l ->
+        binding.shipSelectorGridView.setOnItemClickListener { _, _, position, _ ->
             when {
-                threeBoatDoesNotFit(positions, position) -> Toast.makeText(this, "Select again, boat does not fit in here", Toast.LENGTH_LONG).show()
-                fourBoatDoesNotFit(positions, position) -> Toast.makeText(this, "Select again, boat does not fit in here", Toast.LENGTH_LONG).show()
-                thereIsABoatOnThisPosition(position) -> {
-                    Toast.makeText(this, "Select again, boat does not fit in here", Toast.LENGTH_LONG).show()
-                }
+                notFitPosition(positions, position)  -> showMessage("Select again, boat does not fit in here")
                 else -> {
                     changeGridImagesWithSelected(position)
                     turnGridInvisible()
@@ -49,9 +45,18 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
         binding.boatThree.setOnClickListener(this)
     }
 
+    private fun notFitPosition(positions: Int, position: Int): Boolean {
+        return threeBoatDoesNotFit(positions, position) ||
+                fourBoatDoesNotFit(positions, position) ||
+                thereIsABoatOnThisPosition(position)
+    }
+
+    private fun showMessage(message: String) = Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+
     private fun createObservers() {
-        viewModel.gameAdapter.observe(this, Observer { lastAdapter ->
-            binding.shipSelectorGridView.adapter = lastAdapter
+        viewModel.gameBoard.observe(this, Observer {
+            binding.shipSelectorGridView.adapter = GameAdapter(this,
+                it, binding.shipSelectorGridView)
         })
     }
 
@@ -68,14 +73,14 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
     private fun thereIsABoatOnThisPosition(position: Int): Boolean {
         return when(viewModel.selected.value) {
             binding.boatOne.id, binding.boatThree.id -> noBoatInSelected(position)
-            else -> noBoatInSelected(position) || viewModel.gameAdapter.value!!.getItem(position + 3) != R.drawable.boardbox
+            else -> noBoatInSelected(position) || gameAdapter.getItem(position + 3) != R.drawable.boardbox
         }
     }
 
     private fun noBoatInSelected(position: Int): Boolean {
-        return viewModel.gameAdapter.value!!.getItem(position) != R.drawable.boardbox
-                || viewModel.gameAdapter.value!!.getItem(position + 1) != R.drawable.boardbox
-                || viewModel.gameAdapter.value!!.getItem(position + 2) != R.drawable.boardbox
+        return gameAdapter.getItem(position) != R.drawable.boardbox
+                || gameAdapter.getItem(position + 1) != R.drawable.boardbox
+                || gameAdapter.getItem(position + 2) != R.drawable.boardbox
     }
 
     override fun onClick(p0: View?) {
@@ -94,13 +99,13 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
             binding.boatTwo.id -> changeImages(position, R.drawable.boat2, 4)
             binding.boatThree.id -> changeImages(position, R.drawable.boat3, 3)
         }
-        binding.shipSelectorGridView.adapter = viewModel.gameAdapter.value
+        binding.shipSelectorGridView.adapter = gameAdapter
     }
 
     private fun changeImages(position: Int, id: Int, objective: Int) {
         var position = position
         for(images in 1..objective) {
-            viewModel.gameAdapter.value!!.setImage(position, id)
+            gameAdapter.setImage(position, id)
             viewModel.userCellsWithBoats.value!!.add(position)
             position += 1
         }
@@ -133,7 +138,7 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun endSelection() {
         val data = Intent()
-        data.putExtra("gridAdapter", viewModel.gameAdapter.value!!.getImages())
+        data.putExtra("gridAdapter", gameAdapter.getImages())
         data.putExtra("userCellsWithBoats", viewModel.userCellsWithBoats.value!!.toIntArray())
         setResult(Activity.RESULT_OK, data)
         finish()

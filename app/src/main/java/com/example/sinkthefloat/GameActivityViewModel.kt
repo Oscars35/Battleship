@@ -8,6 +8,10 @@ class GameActivityViewModel: ViewModel() {
     var positions = 0
     var shotDownShipsModify = 0
 
+    val logsArray: MutableLiveData<ArrayList<String>> by lazy {
+        MutableLiveData<ArrayList<String>>(arrayListOf())
+    }
+
     val firstTime: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>(true)
     }

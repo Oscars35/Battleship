@@ -6,23 +6,27 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.widget.TextView
 import com.example.sinkthefloat.databinding.ActivityWinnerBinding
 
 class WinnerActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityWinnerBinding
     private var winner: String? = null
+    private var logsArray: ArrayList<String> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWinnerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         winner = intent.getStringExtra("winner")
+        logsArray = intent.getStringArrayListExtra("logsArray")!!
         binding.winnerTv.text = getString(R.string.winner) + " " + winner
 
         binding.exitButton.setOnClickListener(this)
         binding.mailButton.setOnClickListener(this)
         binding.newGameButton.setOnClickListener(this)
+        binding.logsEditText.setText(logsArray.joinToString(), TextView.BufferType.EDITABLE)
     }
 
     override fun onClick(p0: View?) {
@@ -40,8 +44,8 @@ class WinnerActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun sendMailViaIntent() {
         val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + binding.playerNameEditText.text.toString()))
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Winner of the match")
-        intent.putExtra(Intent.EXTRA_TEXT, winner.toString())
+        intent.putExtra(Intent.EXTRA_SUBJECT, "logs")
+        intent.putExtra(Intent.EXTRA_TEXT, logsArray.joinToString());
         startActivity(intent)
     }
 

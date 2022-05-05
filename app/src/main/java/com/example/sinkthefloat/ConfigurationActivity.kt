@@ -18,6 +18,8 @@ class ConfigurationActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var oceanLevel: String
     private lateinit var difficulty: String
 
+    private var logsArray: ArrayList<String> = arrayListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityConfigurationBinding.inflate(layoutInflater)
@@ -37,12 +39,20 @@ class ConfigurationActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun startNewActivity() {
         getSelectedStuff()
+        addInfoToLogsArray()
         val intent = Intent(this, GameActivity::class.java)
         intent.putExtra("playerName", playerName)
         intent.putExtra("difficulty", difficulty)
         intent.putExtra("oceanLevel", oceanLevel)
+        intent.putExtra("logsArray", logsArray)
         startActivity(intent)
         finish()
+    }
+
+    private fun addInfoToLogsArray() {
+        logsArray.add("Player name: $playerName")
+        logsArray.add("Difficulty: $difficulty")
+        logsArray.add("Ocean Deep: $oceanLevel")
     }
 
     private fun getSelectedStuff() {

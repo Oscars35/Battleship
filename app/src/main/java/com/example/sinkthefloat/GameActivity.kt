@@ -29,14 +29,14 @@ class GameActivity : AppCompatActivity() {
     private var alreadyClicked: Boolean = false
 
     private var iaCellsWithBoats = 0
-    private var userHitBoats = 0
     private lateinit var viewModel: GameActivityViewModel
 
     private val getUserBoard = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             viewModel.playerOneBoard.value = result.data?.getIntArrayExtra("gridAdapter")!!
             viewModel.userCellsWithBoats.value = result.data?.getIntArrayExtra("userCellsWithBoats")!!
-            binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " + (viewModel.userCellsWithBoats.value!!.size - userHitBoats).toString()
+            binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " +
+                    (viewModel.userCellsWithBoats.value!!.size - viewModel.userHitBoats.value!!).toString()
             playerOneAdapter = GameAdapter(this, viewModel.playerOneBoard!!.value!!, binding.boardGridView!!)
         }
     }
@@ -62,6 +62,10 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        return
+    }
+
     private fun addLog(message: String) {
         viewModel.logsArray.value!!.add(message)
     }
@@ -69,6 +73,11 @@ class GameActivity : AppCompatActivity() {
     private fun createObservers() {
         viewModel.actualTurn.observe(this, Observer {
             binding.actualTurnTv.text = getString(R.string.actual_turn) + ": " + viewModel.actualTurn.value
+        })
+
+        viewModel.userCellsWithBoats.observe(this, Observer {
+            binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " +
+                    (viewModel.userCellsWithBoats.value!!.size - viewModel.userHitBoats.value!!).toString()
         })
 
         viewModel.visibleIaBoard.observe(this, Observer {
@@ -164,16 +173,17 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun hitBoat() {
-        addLog("AI hit boat in position: ${viewModel.userCellsWithBoats.value!![userHitBoats]}")
-        playerOneAdapter.setImage(viewModel.userCellsWithBoats.value!![userHitBoats], R.drawable.destroyedboat)
+        addLog("AI hit boat in position: ${viewModel.userCellsWithBoats.value!![viewModel.userHitBoats.value!!]}")
+        playerOneAdapter.setImage(viewModel.userCellsWithBoats.value!![viewModel.userHitBoats.value!!], R.drawable.destroyedboat)
         playerOneAdapter.notifyDataSetChanged()
-        userHitBoats += 1
-        binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " + (viewModel.userCellsWithBoats.value!!.size - userHitBoats).toString()
+        viewModel.userHitBoats.value = ++viewModel.userHitBoatsModify
+        binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " +
+                (viewModel.userCellsWithBoats.value!!.size - viewModel.userHitBoats.value!!).toString()
         checkForIaWinner()
     }
 
     private fun checkForIaWinner() {
-        if(userHitBoats == viewModel.userCellsWithBoats.value!!.size)
+        if(viewModel.userHitBoats.value!! == viewModel.userCellsWithBoats.value!!.size)
             goWinnerScreen("IA")
     }
 

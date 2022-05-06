@@ -29,6 +29,10 @@ class WinnerActivity : AppCompatActivity(), View.OnClickListener {
         binding.logsEditText.setText(logsArray.joinToString(), TextView.BufferType.EDITABLE)
     }
 
+    override fun onBackPressed() {
+        return
+    }
+
     override fun onClick(p0: View?) {
         when(p0?.id) {
             binding.newGameButton.id -> startNewGame()

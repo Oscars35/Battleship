@@ -29,14 +29,15 @@
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@drawable/winnerboat"
         app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView"
         app:layout_constraintEnd_toEndOf="@+id/appCompatImageView"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="@+id/appCompatImageView"
         app:layout_constraintTop_toTopOf="@+id/appCompatImageView"
-        app:layout_constraintVertical_bias="0.756" />
+        app:layout_constraintVertical_bias="0.591" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
@@ -105,10 +106,10 @@
         android:id="@+id/winnerTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="92dp"
         android:fontFamily="@font/pirata_one"
         android:text="@string/winner"
+        android:textColor="#000000"
         android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="@+id/appCompatImageView"
         app:layout_constraintHorizontal_bias="0.193"

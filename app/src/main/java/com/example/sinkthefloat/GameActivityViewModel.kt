@@ -7,6 +7,7 @@ class GameActivityViewModel: ViewModel() {
 
     var positions = 0
     var shotDownShipsModify = 0
+    var userHitBoatsModify = 0
 
     val logsArray: MutableLiveData<ArrayList<String>> by lazy {
         MutableLiveData<ArrayList<String>>(arrayListOf())
@@ -38,5 +39,9 @@ class GameActivityViewModel: ViewModel() {
 
     val userCellsWithBoats: MutableLiveData<IntArray> by lazy {
         MutableLiveData<IntArray>(IntArray(positions * positions) {R.drawable.boardbox})
+    }
+
+    val userHitBoats: MutableLiveData<Int> by lazy {
+        MutableLiveData<Int>(0)
     }
 }

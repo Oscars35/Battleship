@@ -4,7 +4,7 @@
     <string name="help_button_text">Help</string>
     <string name="start_button_text">Start</string>
     <string name="help_text">HELP</string>
-    <string name="help_contain_text">Battleship (also known as Battleships or Sea Battle) is a strategy type guessing game for two players. It is played on ruled grids (paper or board) on which each players fleet of warships are marked. The locations of the fleets are concealed from the other player. Players alternate turns calling shots at the other players ships and the objective of the game is to destroy the opposing players fleet. You can select in game features when clicking Start button in order to adapt the game to the user. This game is only developed to play vs IA. Enjoy!</string>
+    <string name="help_contain_text">Battleship (also known as Battleships or Sea Battle) is a strategy type guessing game for two players. It is played on ruled grids (paper or board) on which each players fleet of warships are marked. The locations of the fleets are concealed from the other player. Players alternate turns calling shots at the other players ships and the objective of the game is to destroy the opposing players fleet. You can select in game features when clicking Start button in order to adapt the game to the user. This game is only developed to play vs IA. This is a modified version of the game because you will only be able to put ships horizontally. The ships will be put in the right of the block you select in the grid. That\'s all, enjoy</string>
     <string name="back">BACK</string>
     <string name="configuration">CONFIGURATION</string>
     <string name="player_name">Enter player name</string>

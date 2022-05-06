@@ -45,6 +45,10 @@ class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {
         binding.boatThree.setOnClickListener(this)
     }
 
+    override fun onBackPressed() {
+        return
+    }
+
     private fun notFitPosition(positions: Int, position: Int): Boolean {
         return threeBoatDoesNotFit(positions, position) ||
                 fourBoatDoesNotFit(positions, position) ||

@@ -16,10 +16,12 @@ import com.example.sinkthefloat.databinding.ActivityGameBinding
 
 class GameActivity : AppCompatActivity() {
 
-    private var MAX_BOATS = 3
-    private var MIN_PROBABILITY = 6
-    private var MEDIUM_PROBABILITY = 4
-    private var MAX_PROBABILITY = 2
+    object Constants {
+        const val MAX_BOATS = 3
+        const val MIN_PROBABILITY = 6
+        const val MEDIUM_PROBABILITY = 4
+        const val MAX_PROBABILITY = 2
+    }
 
     private lateinit var binding: ActivityGameBinding
     private lateinit var playerName: String
@@ -138,9 +140,9 @@ class GameActivity : AppCompatActivity() {
 
     private fun iaPredictPosition() {
         when(difficulty) {
-            DifficultyLevel.EASY -> predictPosition(MIN_PROBABILITY)
-            DifficultyLevel.MEDIUM -> predictPosition(MEDIUM_PROBABILITY)
-            DifficultyLevel.HARD -> predictPosition(MAX_PROBABILITY)
+            DifficultyLevel.EASY -> predictPosition(Constants.MIN_PROBABILITY)
+            DifficultyLevel.MEDIUM -> predictPosition(Constants.MEDIUM_PROBABILITY)
+            DifficultyLevel.HARD -> predictPosition(Constants.MAX_PROBABILITY)
         }
     }
 
@@ -246,7 +248,7 @@ class GameActivity : AppCompatActivity() {
     private fun createRealIaBoard(): IntArray {
         var board = addBoxesToGrid()
         var boats = 0
-        while(boats != MAX_BOATS) {
+        while(boats != Constants.MAX_BOATS) {
             var column = validColumn()
             var row = validRow()
             var boat = genBoat()

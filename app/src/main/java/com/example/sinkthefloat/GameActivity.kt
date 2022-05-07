@@ -28,7 +28,6 @@ class GameActivity : AppCompatActivity() {
     private lateinit var iaAdapter: GameAdapter
     private var alreadyClicked: Boolean = false
 
-    private var iaCellsWithBoats = 0
     private lateinit var viewModel: GameActivityViewModel
 
     private val getUserBoard = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -163,6 +162,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun changeImageWithPredicted(predicted: Int) {
         playerOneAdapter.setImage(predicted, R.drawable.failedhit)
+        viewModel.playerOneBoard!!.value = playerOneAdapter.getImages()
         playerOneAdapter.notifyDataSetChanged()
     }
 
@@ -170,11 +170,14 @@ class GameActivity : AppCompatActivity() {
         return viewModel.playerOneBoard!!.value!![predicted] != R.drawable.appboat
                 && viewModel.playerOneBoard!!.value!![predicted] != R.drawable.boat2
                 && viewModel.playerOneBoard!!.value!![predicted] != R.drawable.boat3
+                && viewModel.playerOneBoard!!.value!![predicted] != R.drawable.failedhit
+                && viewModel.playerOneBoard!!.value!![predicted] != R.drawable.destroyedboat
     }
 
     private fun hitBoat() {
         addLog("AI hit boat in position: ${viewModel.userCellsWithBoats.value!![viewModel.userHitBoats.value!!]}")
         playerOneAdapter.setImage(viewModel.userCellsWithBoats.value!![viewModel.userHitBoats.value!!], R.drawable.destroyedboat)
+        viewModel.playerOneBoard.value = playerOneAdapter.getImages()
         playerOneAdapter.notifyDataSetChanged()
         viewModel.userHitBoats.value = ++viewModel.userHitBoatsModify
         binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " +
@@ -196,20 +199,22 @@ class GameActivity : AppCompatActivity() {
     private fun checkPosition(position: Int) {
         if(boatInPositionSelected(position)) {
             iaAdapter.setImage(position, R.drawable.destroyedboat)
+            viewModel.visibleIaBoard.value = iaAdapter.getImages()
             iaAdapter.notifyDataSetChanged()
-            iaCellsWithBoats -= 1
+            viewModel.iaCellsWithBoats.value = --viewModel.iaCellsWithBoatsModify
             viewModel.shotDownShips.value = ++viewModel.shotDownShipsModify
             binding.shotDownShipsTv.text = getString(R.string.shot_down_ships) + ": " + viewModel.shotDownShips.value.toString()
             checkForUserWinner()
         }
         else {
             iaAdapter.setImage(position, R.drawable.failedhit)
+            viewModel.visibleIaBoard.value = iaAdapter.getImages()
             iaAdapter.notifyDataSetChanged()
         }
     }
 
     private fun checkForUserWinner() {
-        if(iaCellsWithBoats == 0) {
+        if(viewModel.iaCellsWithBoats.value == 0) {
             goWinnerScreen(playerName)
         }
     }
@@ -267,10 +272,11 @@ class GameActivity : AppCompatActivity() {
         board[row * viewModel.positions + column] = boat
         board[row * viewModel.positions + column + 1] = boat
         board[row * viewModel.positions + column + 2] = boat
-        iaCellsWithBoats += 3
+        viewModel.iaCellsWithBoatsModify += 3
+        viewModel.iaCellsWithBoats.value = viewModel.iaCellsWithBoatsModify
         if(boat == R.drawable.boat2) {
             board[row * viewModel.positions + column + 3] = boat
-            iaCellsWithBoats += 1
+            viewModel.iaCellsWithBoats.value = ++viewModel.iaCellsWithBoatsModify
         }
         return board
     }

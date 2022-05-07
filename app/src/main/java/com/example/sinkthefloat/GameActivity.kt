@@ -38,7 +38,7 @@ class GameActivity : AppCompatActivity() {
             viewModel.userCellsWithBoats.value = result.data?.getIntArrayExtra("userCellsWithBoats")!!
             binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " +
                     (viewModel.userCellsWithBoats.value!!.size - viewModel.userHitBoats.value!!).toString()
-            playerOneAdapter = GameAdapter(this, viewModel.playerOneBoard!!.value!!, binding.boardGridView!!)
+            playerOneAdapter = GameAdapter(this, viewModel.playerOneBoard.value!!, binding.boardGridView)
         }
     }
 
@@ -57,7 +57,7 @@ class GameActivity : AppCompatActivity() {
         binding.shotDownShipsTv.text = getString(R.string.shot_down_ships) + ": " + viewModel.shotDownShips.value.toString()
         setActualTurn(playerName)
 
-        binding.iaBoardGridView!!.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+        binding.iaBoardGridView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             addLog("User selected position: ${position.toString()}")
             selectedGridStuff(position)
         }
@@ -82,12 +82,12 @@ class GameActivity : AppCompatActivity() {
         })
 
         viewModel.visibleIaBoard.observe(this, Observer {
-            iaAdapter = GameAdapter(this, viewModel.visibleIaBoard!!.value!!, binding!!.iaBoardGridView)
+            iaAdapter = GameAdapter(this, viewModel.visibleIaBoard.value!!, binding.iaBoardGridView)
             binding.iaBoardGridView.adapter = iaAdapter
         })
 
         viewModel.playerOneBoard.observe(this, Observer {
-            playerOneAdapter = GameAdapter(this, viewModel.playerOneBoard.value!!, binding!!.boardGridView)
+            playerOneAdapter = GameAdapter(this, viewModel.playerOneBoard.value!!, binding.boardGridView)
             binding.boardGridView.adapter = playerOneAdapter
         })
     }
@@ -164,16 +164,16 @@ class GameActivity : AppCompatActivity() {
 
     private fun changeImageWithPredicted(predicted: Int) {
         playerOneAdapter.setImage(predicted, R.drawable.failedhit)
-        viewModel.playerOneBoard!!.value = playerOneAdapter.getImages()
+        viewModel.playerOneBoard.value = playerOneAdapter.getImages()
         playerOneAdapter.notifyDataSetChanged()
     }
 
     private fun noBoatInThisPosition(predicted: Int): Boolean {
-        return viewModel.playerOneBoard!!.value!![predicted] != R.drawable.appboat
-                && viewModel.playerOneBoard!!.value!![predicted] != R.drawable.boat2
-                && viewModel.playerOneBoard!!.value!![predicted] != R.drawable.boat3
-                && viewModel.playerOneBoard!!.value!![predicted] != R.drawable.failedhit
-                && viewModel.playerOneBoard!!.value!![predicted] != R.drawable.destroyedboat
+        return viewModel.playerOneBoard.value!![predicted] != R.drawable.appboat
+                && viewModel.playerOneBoard.value!![predicted] != R.drawable.boat2
+                && viewModel.playerOneBoard.value!![predicted] != R.drawable.boat3
+                && viewModel.playerOneBoard.value!![predicted] != R.drawable.failedhit
+                && viewModel.playerOneBoard.value!![predicted] != R.drawable.destroyedboat
     }
 
     private fun hitBoat() {
@@ -193,9 +193,9 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun changeView(view1: Int, view2: Int) {
-        binding.iaBoardGridView!!.visibility = view1
-        binding.boardGridView!!.visibility = view2
-        binding.boardGridView!!.adapter = playerOneAdapter
+        binding.iaBoardGridView.visibility = view1
+        binding.boardGridView.visibility = view2
+        binding.boardGridView.adapter = playerOneAdapter
     }
 
     private fun checkPosition(position: Int) {
@@ -239,9 +239,9 @@ class GameActivity : AppCompatActivity() {
     private fun setUpIaBoard() {
         if(viewModel.firstTime.value!!) viewModel.visibleIaBoard.value = addBoxesToGrid()
         if(viewModel.firstTime.value!!) viewModel.realIaBoard.value = createRealIaBoard()
-        binding.iaBoardGridView!!.numColumns = viewModel.positions
-        iaAdapter = GameAdapter(this, viewModel.visibleIaBoard!!.value!!, binding!!.iaBoardGridView!!)
-        binding.iaBoardGridView!!.adapter = iaAdapter
+        binding.iaBoardGridView.numColumns = viewModel.positions
+        iaAdapter = GameAdapter(this, viewModel.visibleIaBoard.value!!, binding.iaBoardGridView)
+        binding.iaBoardGridView.adapter = iaAdapter
         addLog("AI board generated")
     }
 
@@ -295,7 +295,7 @@ class GameActivity : AppCompatActivity() {
         playerName = intent.getStringExtra("playerName")!!
         difficulty = (intent.getSerializableExtra("difficulty") as DifficultyLevel?)!!
         if(viewModel.firstTime.value!!) viewModel.logsArray.value = intent.getStringArrayListExtra("logsArray")
-        binding.boardGridView!!.numColumns = viewModel.positions
+        binding.boardGridView.numColumns = viewModel.positions
         addLog("Got intent info")
     }
 

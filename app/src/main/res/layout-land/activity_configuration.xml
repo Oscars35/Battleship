@@ -6,7 +6,7 @@
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/mainImageGif"
-        android:layout_width="780dp"
+        android:layout_width="900dp"
         android:layout_height="1000dp"
         android:src="@drawable/pixelboat"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
             android:drawableTint="#000000"
+            android:background="#CEED4C34"
             android:fontFamily="@font/pirata_one"
             android:inputType="textPersonName"
             android:textColor="#000000"
@@ -64,6 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:background="#CEED4C34"
             android:fontFamily="@font/pirata_one"
             android:text="@string/ocean_level"
             android:textColor="#000000"
@@ -94,6 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="#000000"
+            android:background="#CEED4C34"
             android:fontFamily="@font/pirata_one"
             android:text="@string/ten"
             android:textColor="#000000"
@@ -104,6 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="#000000"
+            android:background="#CEED4C34"
             android:fontFamily="@font/pirata_one"
             android:text="@string/thirteen"
             android:textColor="#000000"
@@ -114,6 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="#000000"
+            android:background="#CEED4C34"
             android:fontFamily="@font/pirata_one"
             android:text="@string/fifteen"
             android:textColor="#000000"
@@ -136,6 +141,7 @@
             android:layout_height="wrap_content"
             android:text="@string/ia_level"
             android:textColor="#000000"
+            android:background="#CEED4C34"
             android:textSize="25sp"
             android:layout_marginTop="8sp"
             android:fontFamily="@font/pirata_one"/>
@@ -163,6 +169,7 @@
             android:layout_height="wrap_content"
             android:buttonTint="#000000"
             android:textColor="#000000"
+            android:background="#CEED4C34"
             android:fontFamily="@font/pirata_one"
             android:text="@string/easy_level"
             android:textSize="20dp"/>
@@ -173,6 +180,7 @@
             android:layout_height="wrap_content"
             android:buttonTint="#000000"
             android:textColor="#000000"
+            android:background="#CEED4C34"
             android:fontFamily="@font/pirata_one"
             android:text="@string/medium_level"
             android:textSize="20dp"/>
@@ -183,6 +191,7 @@
             android:layout_height="wrap_content"
             android:buttonTint="#000000"
             android:textColor="#000000"
+            android:background="#CEED4C34"
             android:fontFamily="@font/pirata_one"
             android:text="@string/hard_level"
             android:textSize="20dp"/>

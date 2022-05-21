@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/mainImageGif"
+        android:layout_width="2000dp"
+        android:layout_height="2000dp"
+        android:src="@drawable/pixelboat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/mainText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:layout_marginBottom="52dp"
+        android:fontFamily="@font/pirata_one"
+        android:text="@string/app_name"
+        android:textSize="150sp"
+        app:layout_constraintBottom_toTopOf="@+id/helpButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/helpButton"
+        android:layout_width="200dp"
+        android:layout_height="140dp"
+        android:textSize="80sp"
+        android:background="@drawable/buttonbarrel"
+        android:fontFamily="@font/pirata_one"
+        android:text="@string/help_button_text"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.403" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/startButton"
+        android:layout_width="200dp"
+        android:layout_height="140dp"
+        android:textSize="80sp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/buttonbarrel"
+        android:fontFamily="@font/pirata_one"
+        android:text="@string/start_button_text"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/helpButton" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/exitButton"
+        android:layout_width="200dp"
+        android:layout_height="140dp"
+        android:textSize="80sp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/buttonbarrel"
+        android:fontFamily="@font/pirata_one"
+        android:text="@string/exit_button_text"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startButton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

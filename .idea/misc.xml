@@ -9,7 +9,13 @@
         <entry key="app/src/main/res/layout-land/activity_help.xml" value="0.29056437389770723" />
         <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout-land/activity_winner.xml" value="0.29012345679012347" />
+        <entry key="app/src/main/res/layout-xlarge-land/activity_configuration.xml" value="0.21987951807228914" />
+        <entry key="app/src/main/res/layout-xlarge-land/activity_game.xml" value="0.21987951807228914" />
+        <entry key="app/src/main/res/layout-xlarge-land/activity_help.xml" value="0.38466042154566743" />
         <entry key="app/src/main/res/layout-xlarge-land/activity_main.xml" value="0.21954484605087016" />
+        <entry key="app/src/main/res/layout-xlarge-port/activity_configurtaion.xml" value="0.256640625" />
+        <entry key="app/src/main/res/layout-xlarge-port/activity_game.xml" value="0.256640625" />
+        <entry key="app/src/main/res/layout-xlarge-port/activity_help.xml" value="0.256640625" />
         <entry key="app/src/main/res/layout-xlarge-port/activity_main.xml" value="0.25625" />
         <entry key="app/src/main/res/layout/activity_boat_selector.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_configuration.xml" value="0.34322916666666664" />

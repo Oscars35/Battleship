@@ -29,4 +29,6 @@
     <string name="actual_turn">Actual turn</string>
     <string name="shot_down_ships">Shot down ships</string>
     <string name="reamining_ships">Remaining ships</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

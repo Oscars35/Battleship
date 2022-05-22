@@ -2,8 +2,9 @@ package com.example.sinkthefloat
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.io.Serializable
 
-class GameActivityViewModel: ViewModel() {
+class GameActivityViewModel: ViewModel(), Serializable {
 
     var positions = 0
     var shotDownShipsModify = 0

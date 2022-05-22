@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.sinkthefloat.databinding.ActivityGameBinding
+import com.example.sinkthefloat.databinding.FragmentGridsBinding
 
 class GameActivity : AppCompatActivity() {
 
@@ -24,6 +25,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityGameBinding
+    private lateinit var fragBinding: FragmentGridsBinding
     private lateinit var playerName: String
     private lateinit var difficulty: DifficultyLevel
     private lateinit var playerOneAdapter: GameAdapter
@@ -38,13 +40,14 @@ class GameActivity : AppCompatActivity() {
             viewModel.userCellsWithBoats.value = result.data?.getIntArrayExtra("userCellsWithBoats")!!
             binding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " +
                     (viewModel.userCellsWithBoats.value!!.size - viewModel.userHitBoats.value!!).toString()
-            playerOneAdapter = GameAdapter(this, viewModel.playerOneBoard.value!!, binding.boardGridView)
+            playerOneAdapter = GameAdapter(this, viewModel.playerOneBoard.value!!, fragBinding.boardGridView)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
+        fragBinding = FragmentGridsBinding.inflate(supportFragmentManager.findFragmentById(R.id.gridsFragment)!!.layoutInflater)
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this)[GameActivityViewModel::class.java]
@@ -57,7 +60,7 @@ class GameActivity : AppCompatActivity() {
         binding.shotDownShipsTv.text = getString(R.string.shot_down_ships) + ": " + viewModel.shotDownShips.value.toString()
         setActualTurn(playerName)
 
-        binding.iaBoardGridView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+        fragBinding.iaBoardGridView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             addLog("User selected position: ${position.toString()}")
             selectedGridStuff(position)
         }
@@ -82,13 +85,13 @@ class GameActivity : AppCompatActivity() {
         })
 
         viewModel.visibleIaBoard.observe(this, Observer {
-            iaAdapter = GameAdapter(this, viewModel.visibleIaBoard.value!!, binding.iaBoardGridView)
-            binding.iaBoardGridView.adapter = iaAdapter
+            iaAdapter = GameAdapter(this, viewModel.visibleIaBoard.value!!, fragBinding.iaBoardGridView)
+            fragBinding.iaBoardGridView.adapter = iaAdapter
         })
 
         viewModel.playerOneBoard.observe(this, Observer {
-            playerOneAdapter = GameAdapter(this, viewModel.playerOneBoard.value!!, binding.boardGridView)
-            binding.boardGridView.adapter = playerOneAdapter
+            playerOneAdapter = GameAdapter(this, viewModel.playerOneBoard.value!!, fragBinding.boardGridView)
+            fragBinding.boardGridView.adapter = playerOneAdapter
         })
     }
 
@@ -193,9 +196,9 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun changeView(view1: Int, view2: Int) {
-        binding.iaBoardGridView.visibility = view1
-        binding.boardGridView.visibility = view2
-        binding.boardGridView.adapter = playerOneAdapter
+        fragBinding.iaBoardGridView.visibility = view1
+        fragBinding.boardGridView.visibility = view2
+        fragBinding.boardGridView.adapter = playerOneAdapter
     }
 
     private fun checkPosition(position: Int) {
@@ -239,9 +242,9 @@ class GameActivity : AppCompatActivity() {
     private fun setUpIaBoard() {
         if(viewModel.firstTime.value!!) viewModel.visibleIaBoard.value = addBoxesToGrid()
         if(viewModel.firstTime.value!!) viewModel.realIaBoard.value = createRealIaBoard()
-        binding.iaBoardGridView.numColumns = viewModel.positions
-        iaAdapter = GameAdapter(this, viewModel.visibleIaBoard.value!!, binding.iaBoardGridView)
-        binding.iaBoardGridView.adapter = iaAdapter
+        fragBinding.iaBoardGridView.numColumns = viewModel.positions
+        iaAdapter = GameAdapter(this, viewModel.visibleIaBoard.value!!, fragBinding.iaBoardGridView)
+        fragBinding.iaBoardGridView.adapter = iaAdapter
         addLog("AI board generated")
     }
 
@@ -295,7 +298,7 @@ class GameActivity : AppCompatActivity() {
         playerName = intent.getStringExtra("playerName")!!
         difficulty = (intent.getSerializableExtra("difficulty") as DifficultyLevel?)!!
         if(viewModel.firstTime.value!!) viewModel.logsArray.value = intent.getStringArrayListExtra("logsArray")
-        binding.boardGridView.numColumns = viewModel.positions
+        fragBinding.boardGridView.numColumns = viewModel.positions
         addLog("Got intent info")
     }
 

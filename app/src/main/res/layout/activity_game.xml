@@ -16,26 +16,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/gridsFragment"
         android:name="com.example.sinkthefloat.GridsFragment"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <GridView
-        android:id="@+id/boardGridView"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/mainImageGif" />
-
-    <GridView
-        android:id="@+id/iaBoardGridView"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/mainImageGif" />
 
     <ImageView
         android:id="@+id/woodSignBoard"

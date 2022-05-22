@@ -16,8 +16,13 @@ class GridsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentGridsBinding.inflate(inflater,container,false)
+        binding = FragmentGridsBinding.inflate(inflater, container, false)
+        binding.boardGridView.numColumns = 4
+        binding.iaBoardGridView.numColumns = 4
         return binding.root
     }
 
+    fun getBinding(): FragmentGridsBinding {
+        return binding
+    }
 }

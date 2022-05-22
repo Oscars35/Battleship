@@ -8,8 +8,10 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.AdapterView
+import android.widget.GridView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.children
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.sinkthefloat.databinding.ActivityGameBinding
@@ -47,9 +49,9 @@ class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
-        fragBinding = FragmentGridsBinding.inflate(supportFragmentManager.findFragmentById(R.id.gridsFragment)!!.layoutInflater)
         setContentView(binding.root)
 
+        fragBinding = FragmentGridsBinding.inflate(supportFragmentManager.findFragmentById(R.id.gridsFragment)!!.layoutInflater)
         viewModel = ViewModelProvider(this)[GameActivityViewModel::class.java]
         createObservers()
 

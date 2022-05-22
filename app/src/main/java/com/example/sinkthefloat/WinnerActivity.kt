@@ -2,11 +2,11 @@ package com.example.sinkthefloat
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.sinkthefloat.databinding.ActivityWinnerBinding
 
 class WinnerActivity : AppCompatActivity(), View.OnClickListener {

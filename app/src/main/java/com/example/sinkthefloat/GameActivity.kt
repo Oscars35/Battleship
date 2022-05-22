@@ -49,6 +49,12 @@ class GameActivity : AppCompatActivity() {
         return
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        supportFragmentManager.beginTransaction().detach(fragment)
+        finish()
+    }
+
     private fun getIntentInfo() {
         oceanLevel = intent.getStringExtra("oceanLevel")!!.toInt()
         playerName = intent.getStringExtra("playerName")!!

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.sinkthefloat.databinding.FragmentGridsBinding
+
 
 class GridsFragment : Fragment() {
 
@@ -240,7 +240,6 @@ class GridsFragment : Fragment() {
         intent.putExtra("logsArray", viewModel.logsArray.value)
         requireActivity().setResult(Activity.RESULT_OK, intent)
         requireActivity().startActivity(intent)
-        requireActivity().supportFragmentManager.beginTransaction().detach(this)
         requireActivity().finish()
     }
 

@@ -93,21 +93,21 @@ class GridsFragment : Fragment() {
     }
 
     private fun createObservers() {
-        viewModel.actualTurn.observe(requireActivity(), Observer {
+        viewModel.actualTurn.observe(viewLifecycleOwner, Observer {
             fragBinding.actualTurnTv.text = getString(R.string.actual_turn) + ": " + viewModel.actualTurn.value
         })
 
-        viewModel.userCellsWithBoats.observe(requireActivity(), Observer {
+        viewModel.userCellsWithBoats.observe(viewLifecycleOwner, Observer {
             fragBinding.remainingShipsTv.text = getString(R.string.reamining_ships) + ": " +
                     (viewModel.userCellsWithBoats.value!!.size - viewModel.userHitBoats.value!!).toString()
         })
 
-        viewModel.visibleIaBoard.observe(requireActivity(), Observer {
+        viewModel.visibleIaBoard.observe(viewLifecycleOwner, Observer {
             iaAdapter = GameAdapter(requireActivity(), viewModel.visibleIaBoard.value!!, fragBinding.iaBoardGridView)
             fragBinding.iaBoardGridView.adapter = iaAdapter
         })
 
-        viewModel.playerOneBoard.observe(requireActivity(), Observer {
+        viewModel.playerOneBoard.observe(viewLifecycleOwner, Observer {
             playerOneAdapter = GameAdapter(requireActivity(), viewModel.playerOneBoard.value!!, fragBinding.boardGridView)
             fragBinding.boardGridView.adapter = playerOneAdapter
         })

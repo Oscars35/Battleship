@@ -18,6 +18,7 @@ class GameActivity : AppCompatActivity() {
     private lateinit var playerName: String
     private lateinit var difficulty: DifficultyLevel
     private lateinit var fragment: GridsFragment
+    private lateinit var viewModel: GameActivityViewModel
     private var oceanLevel: Int = 0
     private var logs: ArrayList<String> = arrayListOf()
 
@@ -25,34 +26,32 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewModel = ViewModelProvider(this)[GameActivityViewModel::class.java]
         getIntentInfo()
         createAndPassFragment()
     }
 
     private fun createAndPassFragment() {
-        fragment = GridsFragment().apply {
-            arguments = Bundle().apply {
-                putString("playerName", playerName)
-                putString("oceanLevel", oceanLevel.toString())
-                putSerializable("difficulty", difficulty)
-                putStringArrayList("logsArray", logs)
+        if(viewModel.firstTime.value == true) {
+            fragment = GridsFragment().apply {
+                arguments = Bundle().apply {
+                    putString("playerName", playerName)
+                    putString("oceanLevel", oceanLevel.toString())
+                    putSerializable("difficulty", difficulty)
+                    putStringArrayList("logsArray", logs)
+                }
             }
-        }
 
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.gridsFragment, fragment)
-            commit()
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.gridsFragment, fragment)
+                commit()
+            }
+            viewModel.firstTime.value = false
         }
     }
 
     override fun onBackPressed() {
         return
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        supportFragmentManager.beginTransaction().detach(fragment)
-        finish()
     }
 
     private fun getIntentInfo() {

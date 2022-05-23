@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ScrollView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -89,6 +91,10 @@ class GridsFragment : Fragment() {
     }
 
     private fun addLog(message: String) {
+        if(fragBinding.logsScrollView != null) {
+            viewModel.logsText.value = viewModel.logsText.value + " , " + message
+            fragBinding.logsTv?.text = viewModel.logsText.value
+        }
         viewModel.logsArray.value!!.add(message)
     }
 
@@ -110,6 +116,11 @@ class GridsFragment : Fragment() {
         viewModel.playerOneBoard.observe(viewLifecycleOwner, Observer {
             playerOneAdapter = GameAdapter(requireActivity(), viewModel.playerOneBoard.value!!, fragBinding.boardGridView)
             fragBinding.boardGridView.adapter = playerOneAdapter
+        })
+
+        viewModel.logsText.observe(viewLifecycleOwner, Observer {
+            if(fragBinding.logsTv != null)
+                fragBinding.logsTv?.text = viewModel.logsText.value
         })
     }
 

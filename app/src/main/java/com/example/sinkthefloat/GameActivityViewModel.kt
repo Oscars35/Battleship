@@ -1,5 +1,6 @@
 package com.example.sinkthefloat
 
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -50,5 +51,9 @@ class GameActivityViewModel: ViewModel(), Serializable {
 
     val iaCellsWithBoats: MutableLiveData<Int> by lazy {
         MutableLiveData<Int>(0)
+    }
+
+    val logsText: MutableLiveData<String> by lazy {
+        MutableLiveData<String>("")
     }
 }

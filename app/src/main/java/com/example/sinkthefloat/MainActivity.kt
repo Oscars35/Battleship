@@ -1,17 +1,14 @@
 package com.example.sinkthefloat
 
 import android.content.Intent
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
-import android.widget.Toolbar
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import com.example.sinkthefloat.databinding.ActivityMainBinding
 import kotlin.system.exitProcess
+
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -52,24 +49,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun goPreferencesMenu() {
-        fragment = SettingsFragment()
+        /*fragment = SettingsFragment()
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.preferencesFragment, fragment)
             commit()
         }
-        hideOrShowOtherStuff()
+        hideOrShowOtherStuff()*/
     }
-
-    private fun hideOrShowOtherStuff() {
-        binding.mainText.visibility = View.GONE
-        binding.helpButton.visibility = View.GONE
-        binding.startButton.visibility = View.GONE
-        binding.exitButton.visibility = View.GONE
-        binding.mainToolBar.visibility = View.GONE
-        binding.preferencesFragment.visibility = View.VISIBLE
-        binding.backButton.visibility = View.VISIBLE
-    }
-
 
     private fun visibleButtons() {
         binding.mainText.visibility = View.VISIBLE

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="GAME SETTINGS" >
+
+        <EditTextPreference
+            android:key="player_name"
+            android:title="PLAYER NAME"
+            android:summary="Select Player Name"
+            android:icon="@drawable/piratepaper"/>
+
+        <ListPreference
+            android:key="@string/ocean_level"
+            android:title="@string/ocean_level"
+            android:summary="Select Grid Length"
+            android:entries="@array/ocean_length"
+            android:icon="@drawable/ocean"
+            android:entryValues="@array/ocean_length" />
+
+        <ListPreference
+            android:key="ai_level"
+            android:title="AI LEVEL"
+            android:summary="Select AI Level"
+            android:entries="@array/ai_level"
+            android:icon="@drawable/pirate"
+            android:entryValues="@array/ai_level" />
+    </PreferenceCategory>
+</PreferenceScreen>

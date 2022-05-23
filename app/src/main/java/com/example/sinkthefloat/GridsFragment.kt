@@ -115,7 +115,7 @@ class GridsFragment : Fragment() {
 
     private fun setActualTurn(actualTurnName: String) {
         viewModel.actualTurn.value = actualTurnName
-        fragBinding.actualTurnTv.text = requireActivity().getString(R.string.actual_turn) + ": " + viewModel.actualTurn.value
+        fragBinding.actualTurnTv.text = activity?.getString(R.string.actual_turn) + ": " + viewModel.actualTurn.value
     }
 
     private fun selectedGridStuff(position: Int) {

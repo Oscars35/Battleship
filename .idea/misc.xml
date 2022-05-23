@@ -16,6 +16,7 @@
         <entry key="app/src/main/res/layout-xlarge-land/activity_help.xml" value="0.38466042154566743" />
         <entry key="app/src/main/res/layout-xlarge-land/activity_main.xml" value="0.21954484605087016" />
         <entry key="app/src/main/res/layout-xlarge-land/activity_winner.xml" value="0.22054886211512717" />
+        <entry key="app/src/main/res/layout-xlarge-land/fragment_grids.xml" value="0.21987951807228914" />
         <entry key="app/src/main/res/layout-xlarge-port/activity_boat_selector.xml" value="0.256640625" />
         <entry key="app/src/main/res/layout-xlarge-port/activity_configurtaion.xml" value="0.256640625" />
         <entry key="app/src/main/res/layout-xlarge-port/activity_game.xml" value="0.22" />

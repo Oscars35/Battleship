@@ -14,74 +14,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <GridView
-        android:id="@+id/boardGridView"
-        android:layout_width="700dp"
-        android:layout_height="700dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iaBoardGridView" />
-
-    <GridView
-        android:id="@+id/iaBoardGridView"
-        android:layout_width="700dp"
-        android:layout_height="700dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/woodSignBoard"
-        android:layout_width="500dp"
-        android:layout_height="600dp"
-        android:src="@drawable/woodsign"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <FrameLayout
+        android:id="@+id/gridsFragment"
+        android:name="com.example.sinkthefloat.GridsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/shotDownShipsTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/pirata_one"
-        android:text="@string/shot_down_ships"
-        android:textColor="#010A42"
-        android:textSize="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/woodSignBoard"
-        app:layout_constraintHorizontal_bias="0.467"
-        app:layout_constraintStart_toStartOf="@+id/woodSignBoard"
-        app:layout_constraintTop_toTopOf="@+id/woodSignBoard"
-        app:layout_constraintVertical_bias="0.261" />
-
-    <TextView
-        android:id="@+id/remainingShipsTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/pirata_one"
-        android:text="@string/reamining_ships"
-        android:textColor="#010A42"
-        android:textSize="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/woodSignBoard"
-        app:layout_constraintHorizontal_bias="0.339"
-        app:layout_constraintStart_toStartOf="@+id/woodSignBoard"
-        app:layout_constraintTop_toTopOf="@+id/woodSignBoard"
-        app:layout_constraintVertical_bias="0.443" />
-
-    <TextView
-        android:id="@+id/actualTurnTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/pirata_one"
-        android:text="@string/actual_turn"
-        android:textColor="#010A42"
-        android:textSize="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/woodSignBoard"
-        app:layout_constraintStart_toStartOf="@+id/woodSignBoard"
-        app:layout_constraintTop_toTopOf="@+id/woodSignBoard"
-        app:layout_constraintVertical_bias="0.352" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

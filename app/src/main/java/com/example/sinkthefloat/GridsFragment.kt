@@ -119,7 +119,7 @@ class GridsFragment : Fragment() {
         })
 
         viewModel.logsText.observe(viewLifecycleOwner, Observer {
-            if(fragBinding.logsTv != null)
+            if(fragBinding.logsScrollView != null)
                 fragBinding.logsTv?.text = viewModel.logsText.value
         })
     }

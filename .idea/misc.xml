@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/layout-land/activity_game.xml" value="0.29012345679012347" />
         <entry key="app/src/main/res/layout-land/activity_help.xml" value="0.29056437389770723" />
         <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout-land/activity_settings.xml" value="0.2892416225749559" />
         <entry key="app/src/main/res/layout-land/activity_winner.xml" value="0.29012345679012347" />
         <entry key="app/src/main/res/layout-land/fragment_grids.xml" value="0.2896825396825397" />
         <entry key="app/src/main/res/layout-xlarge-land/activity_boat_selector.xml" value="0.21987951807228914" />
@@ -15,6 +16,7 @@
         <entry key="app/src/main/res/layout-xlarge-land/activity_game.xml" value="0.21987951807228914" />
         <entry key="app/src/main/res/layout-xlarge-land/activity_help.xml" value="0.38466042154566743" />
         <entry key="app/src/main/res/layout-xlarge-land/activity_main.xml" value="0.21954484605087016" />
+        <entry key="app/src/main/res/layout-xlarge-land/activity_settings.xml" value="0.21987951807228914" />
         <entry key="app/src/main/res/layout-xlarge-land/activity_winner.xml" value="0.22054886211512717" />
         <entry key="app/src/main/res/layout-xlarge-land/fragment_grids.xml" value="0.21987951807228914" />
         <entry key="app/src/main/res/layout-xlarge-port/activity_boat_selector.xml" value="0.256640625" />
@@ -22,6 +24,7 @@
         <entry key="app/src/main/res/layout-xlarge-port/activity_game.xml" value="0.22" />
         <entry key="app/src/main/res/layout-xlarge-port/activity_help.xml" value="0.256640625" />
         <entry key="app/src/main/res/layout-xlarge-port/activity_main.xml" value="0.25625" />
+        <entry key="app/src/main/res/layout-xlarge-port/activity_settings.xml" value="0.256640625" />
         <entry key="app/src/main/res/layout-xlarge-port/activity_winner.xml" value="0.2416871921182266" />
         <entry key="app/src/main/res/layout-xlarge-port/fragment_grids.xml" value="0.256640625" />
         <entry key="app/src/main/res/layout/activity_boat_selector.xml" value="0.33" />
@@ -37,6 +40,10 @@
         <entry key="app/src/main/res/layout/grid_item.xml" value="0.44779582366589327" />
         <entry key="app/src/main/res/layout/preferences_activity.xml" value="0.3421875" />
         <entry key="app/src/main/res/menu/settings_menu.xml" value="0.3421875" />
+        <entry key="app/src/main/res/xml-land/preferences.xml" value="0.2896825396825397" />
+        <entry key="app/src/main/res/xml-normal-land/preferences.xml" value="0.2892416225749559" />
+        <entry key="app/src/main/res/xml-xlarge-land/preferences.xml" value="0.21987951807228914" />
+        <entry key="app/src/main/res/xml-xlarge-port/preferences.xml" value="0.256640625" />
         <entry key="app/src/main/res/xml/arrays.xml" value="0.3421875" />
         <entry key="app/src/main/res/xml/preferences.xml" value="0.3421875" />
       </map>

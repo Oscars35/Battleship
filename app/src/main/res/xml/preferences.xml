@@ -9,7 +9,7 @@
             android:icon="@drawable/piratepaper"/>
 
         <ListPreference
-            android:key="@string/ocean_level"
+            android:key="ocean_level"
             android:title="@string/ocean_level"
             android:summary="Select Grid Length"
             android:entries="@array/ocean_length"

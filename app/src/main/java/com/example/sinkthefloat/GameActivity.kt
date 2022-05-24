@@ -1,8 +1,10 @@
 package com.example.sinkthefloat
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import com.example.sinkthefloat.databinding.ActivityGameBinding
 
 class GameActivity : AppCompatActivity() {
@@ -27,7 +29,7 @@ class GameActivity : AppCompatActivity() {
         binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel = ViewModelProvider(this)[GameActivityViewModel::class.java]
-        getIntentInfo()
+        getPreferencesInfo()
         createAndPassFragment()
     }
 
@@ -54,12 +56,22 @@ class GameActivity : AppCompatActivity() {
         return
     }
 
-    private fun getIntentInfo() {
-        oceanLevel = intent.getStringExtra("oceanLevel")!!.toInt()
-        playerName = intent.getStringExtra("playerName")!!
-        difficulty = (intent.getSerializableExtra("difficulty") as DifficultyLevel?)!!
+    private fun getPreferencesInfo() {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        playerName = preferences.getString("player_name", "Player1").toString()
+        oceanLevel = preferences.getString("ocean_level", "10").toString().toInt()
+        difficulty = getEnumValue(preferences)
+        addLog("Preferences: $playerName $oceanLevel $difficulty")
         logs = intent.getStringArrayListExtra("logsArray")!!
         addLog("Got intent info")
+    }
+
+    private fun getEnumValue(preferences: SharedPreferences): DifficultyLevel {
+        return when(preferences.getString("ai_level", "Hard")) {
+            "Easy" -> DifficultyLevel.EASY
+            "Medium" -> DifficultyLevel.MEDIUM
+            else -> DifficultyLevel.HARD
+        }
     }
 
     private fun addLog(message: String) {

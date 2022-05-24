@@ -4,6 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +21,8 @@ class WinnerActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityWinnerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.mainToolBar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         winner = intent.getStringExtra("winner")
         logsArray = intent.getStringArrayListExtra("logsArray")!!
         binding.winnerTv.text = getString(R.string.winner) + " " + winner
@@ -31,6 +35,23 @@ class WinnerActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onBackPressed() {
         return
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.settings_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_settings -> goPreferencesMenu()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun goPreferencesMenu() {
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onClick(p0: View?) {

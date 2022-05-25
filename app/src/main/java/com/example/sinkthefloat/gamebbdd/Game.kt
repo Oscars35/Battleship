@@ -4,14 +4,15 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.sinkthefloat.DifficultyLevel
-import java.sql.Date
+import java.time.LocalDateTime
 
-@Entity
+@Entity(tableName = "game_table")
 data class Game(
-    @PrimaryKey val gameId: Int,
-    @ColumnInfo(name = "Date") val date: Date?,
+    @PrimaryKey(autoGenerate = true) val gameId: Int = 0,
+    @ColumnInfo(name = "date") val date: String?,
     @ColumnInfo(name = "playerName") val playerName: String?,
-    @ColumnInfo(name = "oceanLevel") val oceanLevel: Int?,
-    @ColumnInfo(name = "difficulty") val difficulty: DifficultyLevel?,
+    @ColumnInfo(name = "oceanName") val oceanName: Int?,
+    @ColumnInfo(name = "difficulty") val difficulty: String?,
     @ColumnInfo(name = "winner") val winner: String?
-)
+){
+}

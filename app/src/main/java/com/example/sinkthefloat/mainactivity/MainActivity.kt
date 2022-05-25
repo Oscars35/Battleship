@@ -10,6 +10,7 @@ import com.example.sinkthefloat.R
 import com.example.sinkthefloat.settingsactivity.SettingsActivity
 import com.example.sinkthefloat.databinding.ActivityMainBinding
 import com.example.sinkthefloat.gameactivity.GameActivity
+import com.example.sinkthefloat.gamebbdd.AppDatabase
 import com.example.sinkthefloat.helpactivity.HelpActivity
 import kotlin.system.exitProcess
 
@@ -24,11 +25,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.mainToolBar)
+        createDatabase()
         supportActionBar?.setDisplayShowTitleEnabled(false)
         addLog("Set action bar")
         binding.helpButton.setOnClickListener(this)
         binding.exitButton.setOnClickListener(this)
         binding.startButton.setOnClickListener(this)
+    }
+
+    private fun createDatabase() {
+        val db = AppDatabase.getInstance(this)
+        addLog("Created database")
     }
 
     override fun onClick(src: View) {

@@ -8,10 +8,10 @@ import com.example.sinkthefloat.gamebbdd.Game
 
 @Dao
 interface GameDao {
-    @Query("SELECT * FROM game")
+    @Query("SELECT * FROM game_table")
     fun getAll(): List<Game>
 
-    @Query("SELECT * FROM game WHERE `playerName` LIKE :name")
+    @Query("SELECT * FROM game_table WHERE `playerName` LIKE :name")
     fun loadAllByName(name: String): List<Game>
 
     @Insert

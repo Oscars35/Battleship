@@ -9,9 +9,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
+import com.example.sinkthefloat.DifficultyLevel
 import com.example.sinkthefloat.R
 import com.example.sinkthefloat.databinding.ActivityWinnerBinding
+import com.example.sinkthefloat.gamebbdd.AppDatabase
+import com.example.sinkthefloat.gamebbdd.Game
 import com.example.sinkthefloat.settingsactivity.SettingsActivity
+import java.time.LocalDateTime
 
 class WinnerActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -29,10 +34,25 @@ class WinnerActivity : AppCompatActivity(), View.OnClickListener {
         logsArray = intent.getStringArrayListExtra("logsArray")!!
         binding.winnerTv.text = getString(R.string.winner) + " " + winner
 
+        addInfoToDatabase()
+
         binding.exitButton.setOnClickListener(this)
         binding.mailButton.setOnClickListener(this)
         binding.newGameButton.setOnClickListener(this)
         binding.logsEditText.setText(logsArray.joinToString(), TextView.BufferType.EDITABLE)
+    }
+
+    private fun addInfoToDatabase() {
+        val db = AppDatabase.getInstance(this)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        db.gameDao().insertAll(Game(
+            0,
+            LocalDateTime.now().toString(),
+            preferences.getString("player_name", "Player1").toString(),
+            preferences.getString("ocean_level", "10").toString().toInt(),
+            preferences.getString("ai_level", "Hard"),
+            winner,
+        ))
     }
 
     override fun onBackPressed() {

@@ -10,7 +10,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         fun getInstance(context: Context): AppDatabase
-                = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "games.db").build()
+                = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "games.db").allowMainThreadQueries().build()
     }
 
     abstract fun gameDao(): GameDao

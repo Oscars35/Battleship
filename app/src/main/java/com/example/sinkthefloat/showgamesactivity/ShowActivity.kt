@@ -15,7 +15,14 @@ class ShowActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityShowgamesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setBackButtonListener()
         initRecycler()
+    }
+
+    private fun setBackButtonListener() {
+        binding.backButton.setOnClickListener {
+            finish()
+        }
     }
 
     private fun initRecycler() {

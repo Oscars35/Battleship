@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".showgamesactivity.ShowActivity"
+            android:exported="false" />
+        <activity
             android:name=".settingsactivity.SettingsActivity"
             android:exported="false" />
         <activity
@@ -20,9 +23,6 @@
             android:exported="false" />
         <activity
             android:name=".gameactivity.GameActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ConfigurationActivity"
             android:exported="false" />
         <activity
             android:name=".helpactivity.HelpActivity"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -36,7 +37,7 @@
         android:id="@+id/mainText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="40dp"
         android:fontFamily="@font/pirata_one"
         android:text="@string/app_name"
         android:textColor="#000000"
@@ -50,45 +51,60 @@
         android:id="@+id/helpButton"
         android:layout_width="200dp"
         android:layout_height="140dp"
-        android:textSize="80sp"
         android:background="@drawable/buttonbarrel"
         android:fontFamily="@font/pirata_one"
         android:text="@string/help_button_text"
         android:textColor="#FFFFFF"
+        android:textSize="80sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintHorizontal_bias="0.633"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.322" />
+        app:layout_constraintVertical_bias="0.375" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/startButton"
         android:layout_width="200dp"
         android:layout_height="140dp"
-        android:textSize="80sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="308dp"
         android:background="@drawable/buttonbarrel"
         android:fontFamily="@font/pirata_one"
         android:text="@string/start_button_text"
         android:textColor="#FFFFFF"
+        android:textSize="80sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.38"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/helpButton" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/exitButton"
         android:layout_width="200dp"
         android:layout_height="140dp"
-        android:textSize="80sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="88dp"
         android:background="@drawable/buttonbarrel"
         android:fontFamily="@font/pirata_one"
         android:text="@string/exit_button_text"
         android:textColor="#FFFFFF"
+        android:textSize="80sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.633"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/helpButton" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/gamesButton"
+        android:layout_width="200dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="88dp"
+        android:background="@drawable/buttonbarrel"
+        android:fontFamily="@font/pirata_one"
+        android:text="@string/games_button"
+        android:textColor="#FFFFFF"
+        android:textSize="80sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.381"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startButton" />
 

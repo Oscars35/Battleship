@@ -63,7 +63,7 @@
         android:id="@+id/startButton"
         android:layout_width="118dp"
         android:layout_height="70dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/buttonbarrel"
         android:fontFamily="@font/pirata_one"
         android:text="@string/start_button_text"
@@ -86,6 +86,21 @@
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gamesButton" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/gamesButton"
+        android:layout_width="118dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/buttonbarrel"
+        android:fontFamily="@font/pirata_one"
+        android:text="@string/games_button"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startButton" />
 

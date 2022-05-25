@@ -12,6 +12,7 @@ import com.example.sinkthefloat.databinding.ActivityMainBinding
 import com.example.sinkthefloat.gameactivity.GameActivity
 import com.example.sinkthefloat.gamebbdd.AppDatabase
 import com.example.sinkthefloat.helpactivity.HelpActivity
+import com.example.sinkthefloat.showgamesactivity.ShowActivity
 import kotlin.system.exitProcess
 
 
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.helpButton.setOnClickListener(this)
         binding.exitButton.setOnClickListener(this)
         binding.startButton.setOnClickListener(this)
+        binding.gamesButton.setOnClickListener(this)
     }
 
     private fun createDatabase() {
@@ -43,7 +45,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             binding.helpButton.id -> startHelpActivity()
             binding.exitButton.id -> endApp()
             binding.startButton.id -> goGame()
+            binding.gamesButton.id -> showBBDD()
         }
+    }
+
+    private fun showBBDD() {
+        val intent = Intent(this, ShowActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

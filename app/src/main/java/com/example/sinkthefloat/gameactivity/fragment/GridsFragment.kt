@@ -1,4 +1,4 @@
-package com.example.sinkthefloat
+package com.example.sinkthefloat.gameactivity.fragment
 
 import android.app.Activity
 import android.content.Intent
@@ -9,14 +9,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ScrollView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.sinkthefloat.DifficultyLevel
+import com.example.sinkthefloat.R
+import com.example.sinkthefloat.winneractivity.WinnerActivity
+import com.example.sinkthefloat.boatselector.BoatSelectorActivity
 import com.example.sinkthefloat.databinding.FragmentGridsBinding
+import com.example.sinkthefloat.gameactivity.GameActivity
+import com.example.sinkthefloat.gameactivity.GameActivityViewModel
+import com.example.sinkthefloat.gameactivity.GameAdapter
 
 
 class GridsFragment : Fragment() {
@@ -202,7 +207,9 @@ class GridsFragment : Fragment() {
 
     private fun hitBoat() {
         addLog("AI hit boat in position: ${viewModel.userCellsWithBoats.value!![viewModel.userHitBoats.value!!]}")
-        playerOneAdapter.setImage(viewModel.userCellsWithBoats.value!![viewModel.userHitBoats.value!!], R.drawable.destroyedboat)
+        playerOneAdapter.setImage(viewModel.userCellsWithBoats.value!![viewModel.userHitBoats.value!!],
+            R.drawable.destroyedboat
+        )
         viewModel.playerOneBoard.value = playerOneAdapter.getImages()
         playerOneAdapter.notifyDataSetChanged()
         viewModel.userHitBoats.value = ++viewModel.userHitBoatsModify
@@ -315,7 +322,7 @@ class GridsFragment : Fragment() {
     }
 
     private fun addBoxesToGrid(): IntArray {
-        return IntArray(viewModel.positions * viewModel.positions) {R.drawable.boardbox}
+        return IntArray(viewModel.positions * viewModel.positions) { R.drawable.boardbox }
     }
 
 }

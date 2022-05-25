@@ -1,7 +1,8 @@
-package com.example.sinkthefloat
+package com.example.sinkthefloat.settingsactivity.fragment
 
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
+import com.example.sinkthefloat.R
 
 class SettingsFragment : PreferenceFragmentCompat() {
 

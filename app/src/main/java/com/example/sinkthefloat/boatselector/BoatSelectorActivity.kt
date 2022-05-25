@@ -1,4 +1,4 @@
-package com.example.sinkthefloat
+package com.example.sinkthefloat.boatselector
 
 import android.app.Activity
 import android.content.Intent
@@ -8,6 +8,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.sinkthefloat.gameactivity.GameAdapter
+import com.example.sinkthefloat.R
 import com.example.sinkthefloat.databinding.ActivityBoatSelectorBinding
 
 class BoatSelectorActivity : AppCompatActivity(), View.OnClickListener {

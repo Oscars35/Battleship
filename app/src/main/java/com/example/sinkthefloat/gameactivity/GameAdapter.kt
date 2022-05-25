@@ -1,4 +1,4 @@
-package com.example.sinkthefloat
+package com.example.sinkthefloat.gameactivity
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.GridView
 import android.widget.ImageView
+import com.example.sinkthefloat.R
 import java.io.Serializable
 import kotlin.math.sqrt
 

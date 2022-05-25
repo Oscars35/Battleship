@@ -1,4 +1,4 @@
-package com.example.sinkthefloat
+package com.example.sinkthefloat.winneractivity
 
 import android.content.Intent
 import android.net.Uri
@@ -9,7 +9,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.sinkthefloat.R
 import com.example.sinkthefloat.databinding.ActivityWinnerBinding
+import com.example.sinkthefloat.settingsactivity.SettingsActivity
 
 class WinnerActivity : AppCompatActivity(), View.OnClickListener {
 

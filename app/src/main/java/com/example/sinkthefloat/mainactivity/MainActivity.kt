@@ -1,4 +1,4 @@
-package com.example.sinkthefloat
+package com.example.sinkthefloat.mainactivity
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,8 +6,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceManager
+import com.example.sinkthefloat.R
+import com.example.sinkthefloat.settingsactivity.SettingsActivity
 import com.example.sinkthefloat.databinding.ActivityMainBinding
+import com.example.sinkthefloat.gameactivity.GameActivity
+import com.example.sinkthefloat.helpactivity.HelpActivity
 import kotlin.system.exitProcess
 
 

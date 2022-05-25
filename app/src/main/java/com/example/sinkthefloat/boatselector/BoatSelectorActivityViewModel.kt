@@ -1,7 +1,8 @@
-package com.example.sinkthefloat
+package com.example.sinkthefloat.boatselector
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.sinkthefloat.R
 
 class BoatSelectorActivityViewModel: ViewModel() {
 
@@ -9,7 +10,7 @@ class BoatSelectorActivityViewModel: ViewModel() {
     var positions = 0
 
     val gameBoard: MutableLiveData<IntArray> by lazy {
-        MutableLiveData<IntArray>(IntArray(positions * positions) {R.drawable.boardbox})
+        MutableLiveData<IntArray>(IntArray(positions * positions) { R.drawable.boardbox })
     }
 
     val selected: MutableLiveData<Int> by lazy {

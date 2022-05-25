@@ -1,9 +1,8 @@
-package com.example.sinkthefloat
+package com.example.sinkthefloat.gameactivity
 
-import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.sinkthefloat.R
 import java.io.Serializable
 
 class GameActivityViewModel: ViewModel(), Serializable {
@@ -38,11 +37,11 @@ class GameActivityViewModel: ViewModel(), Serializable {
     }
 
     val visibleIaBoard: MutableLiveData<IntArray> by lazy {
-        MutableLiveData<IntArray>(IntArray(positions * positions) {R.drawable.boardbox})
+        MutableLiveData<IntArray>(IntArray(positions * positions) { R.drawable.boardbox })
     }
 
     val userCellsWithBoats: MutableLiveData<IntArray> by lazy {
-        MutableLiveData<IntArray>(IntArray(positions * positions) {R.drawable.boardbox})
+        MutableLiveData<IntArray>(IntArray(positions * positions) { R.drawable.boardbox })
     }
 
     val userHitBoats: MutableLiveData<Int> by lazy {

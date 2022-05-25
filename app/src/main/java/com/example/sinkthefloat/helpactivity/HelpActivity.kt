@@ -1,4 +1,4 @@
-package com.example.sinkthefloat
+package com.example.sinkthefloat.helpactivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

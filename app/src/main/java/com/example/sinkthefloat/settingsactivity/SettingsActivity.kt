@@ -1,8 +1,10 @@
-package com.example.sinkthefloat
+package com.example.sinkthefloat.settingsactivity
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.sinkthefloat.R
+import com.example.sinkthefloat.settingsactivity.fragment.SettingsFragment
 import com.example.sinkthefloat.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity(), View.OnClickListener {

@@ -10,25 +10,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SettingsActivity"
+            android:name=".settingsactivity.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".WinnerActivity"
+            android:name=".winneractivity.WinnerActivity"
             android:exported="false" />
         <activity
-            android:name=".BoatSelectorActivity"
+            android:name=".boatselector.BoatSelectorActivity"
             android:exported="false" />
         <activity
-            android:name=".GameActivity"
+            android:name=".gameactivity.GameActivity"
             android:exported="false" />
         <activity
             android:name=".ConfigurationActivity"
             android:exported="false" />
         <activity
-            android:name=".HelpActivity"
+            android:name=".helpactivity.HelpActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".mainactivity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -27,9 +27,9 @@ class GamesAdapter(private val games: List<Game>): RecyclerView.Adapter<GamesAda
     class GameHolder(private val view: View): RecyclerView.ViewHolder(view) {
 
         fun render(game: Game) {
-            view.findViewById<TextView>(R.id.hourTv).text = game.date
-            view.findViewById<TextView>(R.id.playerTv).text = game.playerName
-            view.findViewById<TextView>(R.id.winnerTv).text = game.winner
+            view.findViewById<TextView>(R.id.hourTv).text = "Date: " + game.date
+            view.findViewById<TextView>(R.id.playerTv).text = "Player name: " + game.playerName
+            view.findViewById<TextView>(R.id.winnerTv).text = "Game winner: " + game.winner.toString()
         }
     }
 

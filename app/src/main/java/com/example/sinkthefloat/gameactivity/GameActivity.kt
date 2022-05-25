@@ -6,8 +6,8 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.example.sinkthefloat.DifficultyLevel
-import com.example.sinkthefloat.gameactivity.fragment.GridsFragment
 import com.example.sinkthefloat.R
+import com.example.sinkthefloat.gameactivity.fragment.GridsFragment
 import com.example.sinkthefloat.databinding.ActivityGameBinding
 
 class GameActivity : AppCompatActivity() {

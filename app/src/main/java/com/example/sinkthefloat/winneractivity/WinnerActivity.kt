@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
-import com.example.sinkthefloat.DifficultyLevel
 import com.example.sinkthefloat.R
 import com.example.sinkthefloat.databinding.ActivityWinnerBinding
 import com.example.sinkthefloat.gamebbdd.AppDatabase

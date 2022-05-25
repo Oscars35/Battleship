@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/layout-land/activity_help.xml" value="0.29056437389770723" />
         <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout-land/activity_settings.xml" value="0.2892416225749559" />
+        <entry key="app/src/main/res/layout-land/activity_showgame.xml" value="0.2896825396825397" />
         <entry key="app/src/main/res/layout-land/activity_showgames.xml" value="0.2896825396825397" />
         <entry key="app/src/main/res/layout-land/activity_winner.xml" value="0.29012345679012347" />
         <entry key="app/src/main/res/layout-land/fragment_grids.xml" value="0.2896825396825397" />
@@ -42,6 +43,7 @@
         <entry key="app/src/main/res/layout/activity_help.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.34322916666666664" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.24320987654320989" />
+        <entry key="app/src/main/res/layout/activity_show_game.xml" value="0.34322916666666664" />
         <entry key="app/src/main/res/layout/activity_showgames.xml" value="0.34270833333333334" />
         <entry key="app/src/main/res/layout/activity_winner.xml" value="0.1676912568306011" />
         <entry key="app/src/main/res/layout/fragment_grids.xml" value="0.34322916666666664" />

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import com.example.sinkthefloat.R
 import com.example.sinkthefloat.databinding.ActivityWinnerBinding
+import com.example.sinkthefloat.gameactivity.GameActivity
 import com.example.sinkthefloat.gamebbdd.AppDatabase
 import com.example.sinkthefloat.gamebbdd.Game
 import com.example.sinkthefloat.settingsactivity.SettingsActivity
@@ -97,6 +98,9 @@ class WinnerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun startNewGame() {
+        val intent = Intent(this, GameActivity::class.java)
+        intent.putExtra("logsArray", arrayListOf<String>())
+        startActivity(intent)
         finish()
     }
 

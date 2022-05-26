@@ -14,6 +14,9 @@ interface GameDao {
     @Query("SELECT * FROM game_table WHERE `playerName` LIKE :name")
     fun loadAllByName(name: String): List<Game>
 
+    @Query("SELECT * FROM game_table WHERE gameId LIKE :gameId")
+    fun getGame(gameId: Int): Game
+
     @Query("DELETE FROM game_table")
     fun deleteAll()
 

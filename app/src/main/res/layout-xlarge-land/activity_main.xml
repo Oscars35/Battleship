@@ -19,10 +19,11 @@
         app:layout_constraintVertical_bias="0.628" />
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        app:layout_constraintEnd_toEndOf="parent"
         android:background="#00F86031"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -37,45 +38,41 @@
         android:id="@+id/mainText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
         android:fontFamily="@font/pirata_one"
         android:text="@string/app_name"
         android:textColor="#000000"
         android:textSize="150sp"
-        app:layout_constraintBottom_toTopOf="@+id/helpButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.499"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/helpButton"
         android:layout_width="200dp"
         android:layout_height="140dp"
-        android:layout_marginTop="276dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/buttonbarrel"
         android:fontFamily="@font/pirata_one"
         android:text="@string/help_button_text"
         android:textColor="#FFFFFF"
         android:textSize="80sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.475"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/mainText"
+        app:layout_constraintHorizontal_bias="0.791"
+        app:layout_constraintStart_toStartOf="@+id/mainText"
+        app:layout_constraintTop_toBottomOf="@+id/mainText" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/startButton"
         android:layout_width="200dp"
         android:layout_height="140dp"
-        android:layout_marginTop="8dp"
         android:background="@drawable/buttonbarrel"
         android:fontFamily="@font/pirata_one"
         android:text="@string/start_button_text"
         android:textColor="#FFFFFF"
         android:textSize="80sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.475"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/helpButton" />
+        app:layout_constraintEnd_toStartOf="@+id/helpButton"
+        app:layout_constraintTop_toTopOf="@+id/helpButton" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/exitButton"
@@ -86,10 +83,8 @@
         android:text="@string/exit_button_text"
         android:textColor="#FFFFFF"
         android:textSize="80sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.475"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gamesButton" />
+        app:layout_constraintStart_toEndOf="@+id/gamesButton"
+        app:layout_constraintTop_toBottomOf="@+id/helpButton" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/gamesButton"
@@ -100,9 +95,7 @@
         android:text="@string/games_button"
         android:textColor="#FFFFFF"
         android:textSize="80sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.475"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/helpButton"
         app:layout_constraintTop_toBottomOf="@+id/startButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,8 +17,6 @@ import com.example.sinkthefloat.showgamesactivity.fragment.TextFragment
 
 class GamesAdapter(private val games: List<Game>): RecyclerView.Adapter<GamesAdapter.GameHolder>() {
 
-    private var ready: Boolean = false
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return GameHolder(layoutInflater.inflate(R.layout.item_game, parent, false))
@@ -32,14 +30,15 @@ class GamesAdapter(private val games: List<Game>): RecyclerView.Adapter<GamesAda
             setActivityOnClickListener(holder, position)
         }
         else {
-            setTextOnClickListener(holder)
+            setTextOnClickListener(holder, games[position])
         }
     }
 
-    private fun setTextOnClickListener(holder: GameHolder) {
+    private fun setTextOnClickListener(holder: GameHolder, game: Game) {
         val activity = holder.getView().rootView.context as ShowActivity
         holder.itemView.setOnClickListener {
             val fragment = TextFragment()
+            fragment.setGame(game)
             activity.supportFragmentManager.beginTransaction().apply {
                 replace(R.id.secondaryFragment, fragment)
                 commit()

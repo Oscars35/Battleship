@@ -7,14 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sinkthefloat.R
 import com.example.sinkthefloat.databinding.ActivityShowgamesBinding
 import com.example.sinkthefloat.gamebbdd.Game
+import com.example.sinkthefloat.showgamesactivity.fragment.TextFragment
 
 
 class GamesAdapter(private val games: List<Game>): RecyclerView.Adapter<GamesAdapter.GameHolder>() {
+
+    private var ready: Boolean = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -29,7 +32,18 @@ class GamesAdapter(private val games: List<Game>): RecyclerView.Adapter<GamesAda
             setActivityOnClickListener(holder, position)
         }
         else {
+            setTextOnClickListener(holder)
+        }
+    }
 
+    private fun setTextOnClickListener(holder: GameHolder) {
+        val activity = holder.getView().rootView.context as ShowActivity
+        holder.itemView.setOnClickListener {
+            val fragment = TextFragment()
+            activity.supportFragmentManager.beginTransaction().apply {
+                replace(R.id.secondaryFragment, fragment)
+                commit()
+            }
         }
     }
 

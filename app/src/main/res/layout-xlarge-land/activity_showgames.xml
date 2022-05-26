@@ -15,13 +15,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.668" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/gamesRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="750dp"
-        app:layout_constraintBottom_toTopOf="@+id/backButton"
-        app:layout_constraintEnd_toEndOf="parent"
+    <FrameLayout
+        android:id="@+id/mainFragment"
+        android:layout_width="600dp"
+        android:layout_height="400dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/secondaryFragment"
+        android:layout_width="600dp"
+        android:layout_height="400dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton

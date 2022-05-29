@@ -6,13 +6,15 @@
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/mainImageGif"
-        android:layout_width="780dp"
-        android:layout_height="1000dp"
+        android:layout_width="1500dp"
+        android:layout_height="1500dp"
         android:src="@drawable/pixelboat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.639" />
 
     <TextView
         android:id="@+id/helpTitle"

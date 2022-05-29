@@ -6,8 +6,8 @@
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/mainImageGif"
-        android:layout_width="1000dp"
-        android:layout_height="1000dp"
+        android:layout_width="1500dp"
+        android:layout_height="1500dp"
         android:src="@drawable/pixelboat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
